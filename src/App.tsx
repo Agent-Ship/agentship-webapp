@@ -3,6 +3,7 @@ import { Header } from './components/Header'
 import { Home } from './components/Home'
 import { Changelog } from './components/Changelog'
 import { Footer } from './components/Footer'
+import { Chatbot } from './components/Chatbot'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <Chatbot />
     </Router>
   )
 }
