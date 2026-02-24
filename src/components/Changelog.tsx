@@ -12,6 +12,21 @@ interface ChangelogEntry {
 
 const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-02-24',
+    title: 'MCP (Model Context Protocol) STDIO Integration',
+    highlights: [
+      'Full MCP server integration with STDIO transport for external tools',
+      'Dual engine support — MCP works identically with both ADK and LangGraph',
+      'Auto tool discovery and documentation via PromptBuilder',
+      'Event loop-safe reconnection for production web servers',
+      'Dynamic schema extraction for proper tool parameter handling',
+      '66 tests including 37 new critical unit tests for MCP components',
+      'GitHub Actions CI/CD workflows for automated testing on PRs',
+    ],
+    type: 'release',
+    link: 'https://github.com/AgentShippingKit/agent-ship/pull/15',
+  },
+  {
     date: '2026-02-10',
     title: 'LangGraph Engine + Streaming + Opik Observability',
     highlights: [
