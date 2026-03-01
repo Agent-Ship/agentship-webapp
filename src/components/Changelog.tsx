@@ -12,6 +12,22 @@ interface ChangelogEntry {
 
 const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-03-01',
+    title: 'Remote MCP Integration with HTTP/OAuth Transport',
+    highlights: [
+      'HTTP/OAuth MCP transport (SSEMCPClient) for remote servers like GitHub and Slack',
+      'Per-agent OAuth client isolation — prevents token cross-contamination between agents',
+      'Environment variable resolution: ${VAR} tokens in MCP command args resolved at load time',
+      'OAuth 2.0 flow with encrypted token storage (Fernet) in PostgreSQL',
+      'CLI commands: agentship mcp connect / list-connections / disconnect',
+      'GitHub MCP agent examples for both ADK and LangGraph engines',
+      'Comprehensive integration test suite — 7 new test files covering naming, isolation, streaming, and MCP transport',
+      'Debug UI Stop button — abort in-flight streaming responses mid-stream',
+    ],
+    type: 'release',
+    link: 'https://github.com/Agent-Ship/agent-ship/pull/17',
+  },
+  {
     date: '2026-02-24',
     title: 'MCP (Model Context Protocol) STDIO Integration',
     highlights: [
