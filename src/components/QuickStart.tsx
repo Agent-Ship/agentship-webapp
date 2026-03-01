@@ -11,21 +11,21 @@ const PKG_MAP: Record<Setup, string[]> = {
 
 const COMMANDS: Record<Setup, Record<string, string>> = {
   Docker: {
-    make: `git clone https://github.com/harshuljain13/ship-ai-agents.git
-cd ship-ai-agents/ai/ai-ecosystem
+    make: `git clone https://github.com/Agent-Ship/agent-ship.git
+cd agent-ship
 make docker-setup`,
-    'docker compose': `git clone https://github.com/harshuljain13/ship-ai-agents.git
-cd ship-ai-agents/ai/ai-ecosystem
+    'docker compose': `git clone https://github.com/Agent-Ship/agent-ship.git
+cd agent-ship
 cp env.example .env   # Add your API keys
 docker compose up --build`,
   },
   Local: {
-    make: `git clone https://github.com/harshuljain13/ship-ai-agents.git
-cd ship-ai-agents/ai/ai-ecosystem
+    make: `git clone https://github.com/Agent-Ship/agent-ship.git
+cd agent-ship
 make setup
 make dev`,
-    pipenv: `git clone https://github.com/harshuljain13/ship-ai-agents.git
-cd ship-ai-agents/ai/ai-ecosystem
+    pipenv: `git clone https://github.com/Agent-Ship/agent-ship.git
+cd agent-ship
 pipenv install --dev
 cp env.example .env   # Add your API keys
 pipenv run uvicorn src.service.main:app --reload --port 7001`,

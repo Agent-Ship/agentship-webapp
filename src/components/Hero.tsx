@@ -56,7 +56,7 @@ export function Hero() {
             Documentation
           </a>
           <a
-            href="https://github.com/harshuljain13/ship-ai-agents"
+            href="https://github.com/Agent-Ship/agent-ship"
             className={styles.ghBtn}
             target="_blank"
             rel="noopener noreferrer"
@@ -75,7 +75,7 @@ export function Hero() {
             <span className={styles.codeTitle}>Terminal</span>
           </div>
           <pre className={styles.codeBody}>
-<code><span className={styles.codeMuted}>$</span> git clone https://github.com/harshuljain13/ship-ai-agents.git{'\n'}<span className={styles.codeMuted}>$</span> cd ship-ai-agents/ai/ai-ecosystem{'\n'}<span className={styles.codeMuted}>$</span> make docker-setup{'\n'}<span className={styles.codeSuccess}>✓ API running at http://localhost:7001</span></code>
+<code><span className={styles.codeMuted}>$</span> git clone https://github.com/Agent-Ship/agent-ship.git{'\n'}<span className={styles.codeMuted}>$</span> cd agent-ship{'\n'}<span className={styles.codeMuted}>$</span> make docker-setup{'\n'}<span className={styles.codeSuccess}>✓ API running at http://localhost:7001</span></code>
           </pre>
         </div>
 
