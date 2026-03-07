@@ -1,47 +1,33 @@
 import styles from './Hero.module.css'
 
-const FEATURES = [
-  { label: 'Auto-Discovery', desc: 'Drop in a YAML + Python file, agent registers itself' },
-  { label: 'REST & SSE API', desc: 'FastAPI endpoints with streaming out of the box' },
-  { label: 'Session Memory', desc: 'PostgreSQL or in-memory, persistent conversations' },
-  { label: 'Multi-LLM', desc: 'OpenAI, Gemini, Claude via unified config' },
-  { label: 'Dual Engines', desc: 'Google ADK or LangGraph — pick per agent' },
-  { label: 'Observability', desc: 'Opik tracing, metrics, and structured logging' },
-]
-
 export function Hero() {
   return (
     <section className={styles.hero}>
-      {/* Background layers */}
       <div className={styles.gridBg} />
       <div className={styles.glowCenter} />
       <div className={styles.glowAccent} />
 
       <div className={styles.inner}>
-        {/* Chip */}
         <div className={styles.chip}>
           <span className={styles.chipDot} />
           Open Source &middot; MIT Licensed
         </div>
 
-        {/* Big logo */}
         <div className={styles.bigLogo}>
           <span className={styles.logoAgent}>Agent</span>
           <span className={styles.logoShip}>Ship</span>
         </div>
 
         <h1 className={styles.title}>
-          The <span className="gradient-text">Production Layer</span>
-          {' '}for AI&nbsp;Agents
+          <span className="gradient-text">LiteLLM</span> for Agent&nbsp;Runtimes
         </h1>
 
         <p className={styles.subtitle}>
-          AgentShip sits on top of Google ADK and LangGraph to give you everything
-          needed to <strong>ship agents to production</strong> — REST API, session management,
-          observability, streaming, and deployment — with zero boilerplate.
+          One interface to run agents on Google ADK, LangGraph, or any future engine.
+          Swap runtimes with <strong>one YAML line</strong>. Ship in an hour with the full
+          production stack included.
         </p>
 
-        {/* CTA buttons */}
         <div className={styles.ctas}>
           <a href="#quickstart" className={styles.primaryBtn}>
             Get Started
@@ -66,27 +52,12 @@ export function Hero() {
           </a>
         </div>
 
-        {/* Inline code preview */}
-        <div className={styles.codePreview}>
-          <div className={styles.codeHeader}>
-            <span className={styles.codeDot} style={{ background: '#ff5f57' }} />
-            <span className={styles.codeDot} style={{ background: '#febc2e' }} />
-            <span className={styles.codeDot} style={{ background: '#28c840' }} />
-            <span className={styles.codeTitle}>Terminal</span>
-          </div>
-          <pre className={styles.codeBody}>
-<code><span className={styles.codeMuted}>$</span> git clone https://github.com/Agent-Ship/agent-ship.git{'\n'}<span className={styles.codeMuted}>$</span> cd agent-ship{'\n'}<span className={styles.codeMuted}>$</span> make docker-setup{'\n'}<span className={styles.codeSuccess}>✓ API running at http://localhost:7001</span></code>
-          </pre>
-        </div>
-
-        {/* Feature grid */}
-        <div className={styles.features}>
-          {FEATURES.map((f) => (
-            <div key={f.label} className={styles.featureCard}>
-              <h4 className={styles.featureLabel}>{f.label}</h4>
-              <p className={styles.featureDesc}>{f.desc}</p>
-            </div>
-          ))}
+        <div className={styles.architectureWrap}>
+          <img
+            src="/hero-architecture.png"
+            alt="AgentShip architecture diagram showing Your Agent Code and REST API Clients connecting to AgentShip in the center, which connects to Google ADK, LangGraph, OpenAI SDK, and CrewAI"
+            className={styles.architectureImg}
+          />
         </div>
       </div>
     </section>

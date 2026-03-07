@@ -1,0 +1,229 @@
+/* ═══════════════ ROADMAP PAGE ═══════════════ */
+
+.page {
+  min-height: 100vh;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position: relative;
+  padding: 6rem 1.5rem 2.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.heroInner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-indigo-light);
+  margin-bottom: 0.75rem;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ─── Phases ─── */
+.phases {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ─── Phase card ─── */
+.phaseCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: border-color 0.2s, box-shadow 0.25s;
+}
+
+.phaseCard:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Shipped phase gets a subtle left accent */
+.shipped {
+  border-left: 3px solid var(--brand-teal);
+}
+.building {
+  border-left: 3px solid var(--brand-indigo-light);
+}
+.planned {
+  border-left: 3px solid var(--border);
+}
+
+/* ─── Phase header ─── */
+.phaseHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.phaseMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.phaseVersion {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  user-select: none;
+}
+.shipped .phaseVersion { color: var(--brand-teal); }
+.building .phaseVersion { color: var(--brand-indigo-light); }
+.planned .phaseVersion { color: var(--text-muted); }
+
+/* ─── Status badge ─── */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge_shipped {
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--brand-teal);
+}
+.badge_building {
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--brand-indigo-light);
+}
+.badge_planned {
+  background: rgba(100, 116, 139, 0.12);
+  color: var(--text-muted);
+}
+
+.period {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ─── Summary ─── */
+.phaseSummary {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  max-width: 580px;
+}
+
+/* ─── Items ─── */
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.itemDone {
+  color: var(--text-primary);
+}
+
+.itemCheck {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.itemDone .itemCheck {
+  color: var(--brand-teal);
+}
+
+.itemDot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  margin: auto;
+}
+
+/* ─── Bottom CTA ─── */
+.cta {
+  text-align: center;
+  padding: 3rem 1.5rem 5rem;
+  border-top: 1px solid var(--border);
+}
+
+.ctaText {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1.4rem;
+  background: var(--gradient-btn);
+  color: #fff !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: box-shadow 0.2s, transform 0.1s;
+  text-decoration: none;
+}
+.ctaBtn:hover {
+  box-shadow: 0 0 20px var(--glow-primary);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .hero { padding: 4.5rem 1.25rem 2rem; }
+  .phaseCard { padding: 1.5rem 1.25rem; }
+  .phaseVersion { font-size: 1.5rem; }
+  .items { grid-template-columns: 1fr; }
+}

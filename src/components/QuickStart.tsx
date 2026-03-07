@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import styles from './QuickStart.module.css'
 
 type Setup = 'Docker' | 'Local'
@@ -33,8 +33,33 @@ pipenv run uvicorn src.service.main:app --reload --port 7001`,
 }
 
 const TIPS: Record<Setup, string> = {
-  Docker: 'Hot-reload enabled — edit code in src/ and changes auto-reload.',
+  Docker: 'Hot-reload enabled – edit code in src/ and changes auto-reload.',
   Local: 'Requires Python 3.13+ and pipenv. Run "pip install pipenv" if needed.',
+}
+
+function highlightBash(code: string) {
+  return code.split('\n').map((line, i) => {
+    const commentIdx = line.indexOf('#')
+    let mainPart = line
+    let comment = ''
+    if (commentIdx !== -1) {
+      mainPart = line.slice(0, commentIdx)
+      comment = line.slice(commentIdx)
+    }
+
+    const tokens = mainPart.split(/(\s+)/)
+    const cmd = tokens.find(t => t.trim().length > 0) || ''
+
+    return (
+      <span key={i}>
+        <span className={styles.hlPrompt}>$ </span>
+        <span className={styles.hlCmd}>{cmd}</span>
+        <span className={styles.hlArg}>{mainPart.slice(cmd.length)}</span>
+        {comment && <span className={styles.hlComment}>{comment}</span>}
+        {'\n'}
+      </span>
+    )
+  })
 }
 
 export function QuickStart() {
@@ -44,6 +69,8 @@ export function QuickStart() {
 
   const handleSetup = (s: Setup) => { setSetup(s); setPkg(PKG_MAP[s][0]) }
   const command = COMMANDS[setup][pkg] || ''
+
+  const highlighted = useMemo(() => highlightBash(command), [command])
 
   const copy = useCallback(() => {
     navigator.clipboard.writeText(command)
@@ -60,14 +87,12 @@ export function QuickStart() {
           <strong>Docker</strong> is the smoothest path.
         </p>
 
-        {/* Hints */}
         <div className={styles.hints}>
           <span>Python 3.13+ recommended</span>
           <span>Docker recommended</span>
           <span><a href="https://docs.agent-ship.dev/en/latest/user-guides/getting-started/quickstart.html" target="_blank" rel="noopener noreferrer">Full guide</a></span>
         </div>
 
-        {/* Selectors */}
         <div className={styles.selectors}>
           <div className={styles.row}>
             <span className={styles.label}>Setup</span>
@@ -90,10 +115,16 @@ export function QuickStart() {
         <div className={styles.cmdLabel}>Run this Command:</div>
 
         <div className={styles.codeWrap}>
-          <pre className={styles.code}><code>{command}</code></pre>
+          <div className={styles.codeHeader}>
+            <span className={styles.codeDot} style={{ background: '#ff5f57' }} />
+            <span className={styles.codeDot} style={{ background: '#febc2e' }} />
+            <span className={styles.codeDot} style={{ background: '#28c840' }} />
+            <span className={styles.codeTitle}>Terminal</span>
+          </div>
+          <pre className={styles.code}><code>{highlighted}<span className={styles.hlSuccess}>{'✓'} API running at http://localhost:7001</span></code></pre>
           <button className={styles.copyBtn} onClick={copy} title="Copy to clipboard">
             {copied ? (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-6" stroke="var(--brand-teal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-6" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             ) : (
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M3 11V3a1.5 1.5 0 011.5-1.5H11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
             )}

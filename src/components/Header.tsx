@@ -5,8 +5,9 @@ import styles from './Header.module.css'
 
 const NAV_LINKS = [
   { label: 'Docs', href: 'https://docs.agent-ship.dev/', external: true },
+  { label: 'Tutorials', href: '/tutorials', external: false },
+  { label: 'Roadmap', href: '/roadmap', external: false },
   { label: 'Changelog', href: '/changelog', external: false },
-  { label: 'Community', href: '#community', external: true },
 ]
 
 export function Header() {
@@ -33,7 +34,7 @@ export function Header() {
               </Link>
             )
           )}
-          <a href="https://github.com/harshuljain13/ship-ai-agents" target="_blank" rel="noopener noreferrer" className={styles.navLink}>
+          <a href="https://github.com/Agent-Ship/agent-ship" target="_blank" rel="noopener noreferrer" className={styles.navLink}>
             GitHub
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3.5 1h7.5v7.5M11 1L4.5 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </a>

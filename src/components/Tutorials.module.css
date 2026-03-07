@@ -1,0 +1,222 @@
+/* ═══════════════ TUTORIALS PAGE ═══════════════ */
+
+.page {
+  min-height: 100vh;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position: relative;
+  padding: 6rem 1.5rem 2.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.heroInner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-indigo-light);
+  margin-bottom: 0.75rem;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Coming soon banner ─── */
+.comingSoonBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+}
+
+.pulseDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-indigo-light);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ─── Grid ─── */
+.grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ─── Card ─── */
+.card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.cardDisabled {
+  opacity: 0.65;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ─── Card top row ─── */
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.time {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ─── Level badge ─── */
+.levelBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.level_beginner {
+  background: rgba(52, 211, 153, 0.1);
+  color: var(--brand-teal);
+}
+.level_intermediate {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--brand-indigo-light);
+}
+.level_advanced {
+  background: rgba(251, 146, 60, 0.1);
+  color: #fb923c;
+}
+
+/* ─── Card content ─── */
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+  flex: 1;
+}
+
+/* ─── Tags ─── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--bg-glass);
+  color: var(--text-muted);
+  border: 1px solid var(--border-card);
+}
+
+/* ─── Coming soon overlay label ─── */
+.comingSoon {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── Notify CTA ─── */
+.notify {
+  text-align: center;
+  padding: 2.5rem 1.5rem 5rem;
+  border-top: 1px solid var(--border);
+}
+
+.notifyText {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.notifyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1.4rem;
+  background: var(--gradient-btn);
+  color: #fff !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: box-shadow 0.2s, transform 0.1s;
+  text-decoration: none;
+}
+.notifyBtn:hover {
+  box-shadow: 0 0 20px var(--glow-primary);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .hero { padding: 4.5rem 1.25rem 2rem; }
+  .grid { grid-template-columns: 1fr; padding: 2rem 1.25rem; }
+}

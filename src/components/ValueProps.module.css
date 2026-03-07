@@ -31,6 +31,21 @@
   transform: translateY(-4px);
 }
 
+.cardIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+}
+.purple .cardIcon { color: #a78bfa; }
+.teal .cardIcon   { color: #34d399; }
+.mixed .cardIcon  { color: #818cf8; }
+
 .cardTitle {
   font-size: 1.25rem;
   font-weight: 700;

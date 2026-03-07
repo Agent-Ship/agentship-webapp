@@ -1,39 +1,50 @@
-.group { margin-top: 2.5rem; }
+/* ─── Two-column layout ─── */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) { .columns { grid-template-columns: 1fr; } }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ─── Group headings ─── */
 .groupTitle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-heading);
-  margin-bottom: 1rem;
-}
-.groupNote {
-  font-size: 0.75rem;
-  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin-left: auto;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.groupTitle:first-child { margin-top: 0; }
+
+.groupDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
-.grid6 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 0.75rem;
-}
-.grid4 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.75rem;
-}
-
+/* ─── Cards ─── */
 .card {
-  position: relative;
-  padding: 1.125rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 12px;
-  text-align: center;
   transition: border-color 0.15s, box-shadow 0.2s, transform 0.15s;
 }
 .card:hover {
@@ -42,10 +53,36 @@
   transform: translateY(-2px);
 }
 
+/* ─── Icon ─── */
+.cardIcon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.teal .cardIcon { color: var(--brand-teal); }
+.purple .cardIcon { color: var(--brand-indigo-light); }
+.blue .cardIcon { color: var(--brand-periwinkle); }
+
+/* ─── Body ─── */
+.cardBody { min-width: 0; }
+
+.cardName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-heading);
+}
+
 .tag {
-  position: absolute;
-  top: 8px; right: 8px;
-  padding: 2px 8px;
+  padding: 1px 7px;
   font-size: 0.6rem;
   font-weight: 700;
   border-radius: 4px;
@@ -55,6 +92,9 @@
   letter-spacing: 0.04em;
 }
 
-.cardName { font-weight: 700; font-size: 0.95rem; color: var(--text-heading); }
-.cardVer { font-size: 0.75rem; color: var(--brand-indigo-light); margin-top: 2px; }
-.cardDesc { font-size: 0.775rem; color: var(--text-muted); margin-top: 4px; }
+.cardDesc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
