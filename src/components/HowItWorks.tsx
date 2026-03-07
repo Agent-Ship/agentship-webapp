@@ -24,7 +24,6 @@ function YamlCode() {
 function PythonCode() {
   const kw = styles.hlKw
   const fn = styles.hlFn
-  const s = styles.hlStr
   const v = styles.hlVal
   const p = styles.hlPunct
 
