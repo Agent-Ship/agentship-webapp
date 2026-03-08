@@ -91,7 +91,39 @@
   line-height: 1.3;
   letter-spacing: -0.015em;
   color: var(--text-heading);
+  margin-bottom: 0.75rem;
+}
+
+/* ─── Rotating text ─── */
+.rotatingWrap {
+  height: clamp(2.5rem, 6vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.rotatingText {
+  display: inline-block;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.rotatingIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rotatingOut {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 /* ─── Subtitle ─── */

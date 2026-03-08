@@ -1,6 +1,30 @@
+import { useState, useEffect } from 'react'
 import styles from './Hero.module.css'
 
+const ROTATING_PHRASES = [
+  'Ship agents in an hour',
+  'Swap engines in one line',
+  'Auto-discover MCP tools',
+  'Stream tokens in real time',
+  'Zero infrastructure code',
+  'No framework lock-in',
+]
+
 export function Hero() {
+  const [index, setIndex] = useState(0)
+  const [fade, setFade] = useState(true)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false)
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % ROTATING_PHRASES.length)
+        setFade(true)
+      }, 400)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section className={styles.hero}>
       <div className={styles.gridBg} />
@@ -19,13 +43,18 @@ export function Hero() {
         </div>
 
         <h1 className={styles.title}>
-          <span className="gradient-text">LiteLLM</span> for Agent&nbsp;Runtimes
+          The production layer for AI&nbsp;agents.
         </h1>
 
+        <div className={styles.rotatingWrap}>
+          <span className={`${styles.rotatingText} ${fade ? styles.rotatingIn : styles.rotatingOut}`}>
+            {ROTATING_PHRASES[index]}
+          </span>
+        </div>
+
         <p className={styles.subtitle}>
-          One interface to run agents on Google ADK, LangGraph, or any future engine.
-          Swap runtimes with <strong>one YAML line</strong>. Ship in an hour with the full
-          production stack included.
+          Define agents in two files. Run them on ADK, LangGraph, or any future engine.
+          Get REST API, sessions, streaming, observability, and MCP tools out of the box.
         </p>
 
         <div className={styles.ctas}>
