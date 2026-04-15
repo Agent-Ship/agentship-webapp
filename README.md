@@ -55,3 +55,4 @@ agentship-website/
 
 - [AgentShip repo](https://github.com/harshuljain13/ship-ai-agents)
 - [Quick start (ai-ecosystem)](https://github.com/harshuljain13/ship-ai-agents/tree/main/ai/ai-ecosystem#-quick-start)
+- [Discord Community](https://discord.gg/zCEtKH2P)

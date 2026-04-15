@@ -15,7 +15,7 @@ const COLS = {
   ],
   Community: [
     { label: 'Contributing', href: 'https://github.com/harshuljain13/ship-ai-agents/blob/main/ai/ai-ecosystem/CODE_OF_CONDUCT.md' },
-    { label: 'Discussions', href: 'https://github.com/harshuljain13/ship-ai-agents/discussions' },
+    { label: 'Discord', href: 'https://discord.gg/zCEtKH2P' },
   ],
 }
 

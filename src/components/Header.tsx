@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { label: 'Tutorials', href: '/tutorials', external: false },
   { label: 'Roadmap', href: '/roadmap', external: false },
   { label: 'Changelog', href: '/changelog', external: false },
+  { label: 'Discord', href: 'https://discord.gg/zCEtKH2P', external: true },
 ]
 
 export function Header() {

@@ -126,12 +126,12 @@ export function Tutorials() {
           Want to contribute a tutorial or get notified when they launch?
         </p>
         <a
-          href="https://github.com/Agent-Ship/agent-ship/discussions"
+          href="https://discord.gg/zCEtKH2P"
           target="_blank"
           rel="noopener noreferrer"
           className={styles.notifyBtn}
         >
-          Join the discussion
+          Join our Discord
           <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
             <path d="M3.5 1h7.5v7.5M11 1L4.5 7.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
