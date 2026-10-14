@@ -1,0 +1,25 @@
+/* Wordmark and lockup geometry. See Logo.tsx for the rules these encode. */
+
+.wordmark {
+  font-family: var(--as-font-display);
+  letter-spacing: -0.025em;
+  color: var(--text-heading);
+  white-space: nowrap;
+}
+
+/* "Agent" 500 + "Ship" 800 — the one permitted weight pairing. */
+.agent { font-weight: 500; }
+.ship { font-weight: 800; }
+
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  /* Clearspace: one container block, about 16% of the mark height. */
+  gap: 0.42em;
+  line-height: 1;
+  color: var(--text-heading);
+}
+
+.lockupMark {
+  flex: none;
+}

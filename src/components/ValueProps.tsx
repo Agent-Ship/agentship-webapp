@@ -2,21 +2,21 @@ import styles from './ValueProps.module.css'
 
 const ITEMS = [
   {
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
-    title: 'Ship in an hour',
-    desc: 'REST API, PostgreSQL sessions, streaming, observability, MCP tools – all included. Stop rebuilding ~2,000 lines of infrastructure for every agent.',
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>,
+    title: 'The plumbing, already wired',
+    desc: '`pip install` → `agentship init` → a multi-agent spec served over REST, SSE and WebSocket, with traces that carry token counts and costs. You write the agent; the stack is there.',
     color: 'purple',
   },
   {
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>,
-    title: 'Zero lock-in',
-    desc: 'Swap ADK for LangGraph with one YAML line. Your Python class stays the same. Day-one decisions never become permanent constraints.',
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
+    title: 'Your spec names no vendor',
+    desc: 'One spec is compiled by an engine adapter into somebody else\'s graph, and run by a kernel that imports no vendor library. Replacing the engine is one package, not a rewrite.',
     color: 'teal',
   },
   {
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
-    title: 'Just two files',
-    desc: 'YAML for config, Python for logic. Auto-discovery registers agents on startup – no wiring, no routing, no registration code.',
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>,
+    title: 'Claims you can check',
+    desc: 'Every engine declares its capabilities, and `agentship verify` runs an engine-by-capability grid that fails the build when a declared capability is not actually held.',
     color: 'mixed',
   },
 ]
@@ -27,7 +27,8 @@ export function ValueProps() {
       <div className="container">
         <h2 className="section-title">Why AgentShip?</h2>
         <p className="section-subtitle">
-          Stop rebuilding infrastructure. Start shipping agents.
+          It integrates what you already use rather than reimplementing it, and adds the plumbing
+          none of those libraries ship.
         </p>
         <div className={styles.grid}>
           {ITEMS.map((item) => (

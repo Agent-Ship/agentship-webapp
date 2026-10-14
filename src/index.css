@@ -1,86 +1,135 @@
 /*
- * AgentShip Brand Theme — Light & Dark
- * ─────────────────────────────────────
- * Brand: "Agent" = bold  "Ship" = #818cf8 periwinkle
- * Indigo primary #6366f1 → vibrant #7c3aed purple accent
- * Teal accent #2dd4bf → vibrant #34d399 emerald
+ * AgentShip brand theme.
+ * ──────────────────────
+ * Values come from the AgentShip brand kit (branding/tokens/tokens.json in the
+ * framework repo). Dark is the default surface; light is a documented override.
+ *
+ * The kit's own names are kept as `--as-*` below, and the component variables
+ * this site already uses are defined in terms of them. Add a colour by pointing
+ * a component variable at an `--as-*` token — do not paste a new hex into a
+ * component stylesheet.
+ *
+ * Three rules the kit is strict about, and that this file enforces:
+ *   - the accent is ONE colour, for emphasis only, never a large fill;
+ *   - no gradients and no glows (the gradient/glow variables below are kept as
+ *     names so the component CSS still resolves, but they now evaluate to flat
+ *     brand surfaces and to `transparent`);
+ *   - no pure white text and no pure black ground.
+ *
+ * Fonts are self-hosted and loaded from index.html (/fonts/fonts.css), not from
+ * a CDN.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* ═══════════════ BRAND TOKENS ═══════════════ */
+:root {
+  --as-ink: #0D1317;
+  --as-panel: #141C22;
+  --as-harbor: #1B262D;
+  --as-line: #243039;
+  --as-line-strong: #2A3944;
+  --as-outline: #34454F;
+  --as-fog: #E8EEF0;
+  --as-text: #C9D5DB;
+  --as-muted: #9FB0B9;
+  --as-paper: #F3F5F4;
+  --as-accent: #A685EE;
+  --as-accent-hover: #C0AAF5;
+  --as-accent-on-light: #6A47C2;
+  --as-code-key: #5CCFC0;
+
+  --as-font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --as-font-text: 'Instrument Sans', system-ui, sans-serif;
+  --as-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --as-radius-chip: 6px;
+  --as-radius-card: 12px;
+  --as-radius-panel: 14px;
+}
 
 /* ═══════════════ DARK THEME (default) ═══════════════ */
 :root, [data-theme="dark"] {
-  --brand-indigo: #7c3aed;
-  --brand-indigo-hover: #6d28d9;
-  --brand-indigo-light: #a78bfa;
-  --brand-indigo-lighter: #c4b5fd;
-  --brand-periwinkle: #818cf8;
-  --brand-teal: #34d399;
-  --brand-teal-light: #6ee7b7;
+  color-scheme: dark;
 
-  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #818cf8 50%, #34d399 100%);
-  --gradient-btn: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-  --gradient-btn-hover: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+  --brand-indigo: var(--as-accent);
+  --brand-indigo-hover: var(--as-accent-hover);
+  --brand-indigo-light: var(--as-accent);
+  --brand-indigo-lighter: var(--as-accent-hover);
+  /* The "Ship" half of the wordmark and the mark's top block are the accent. */
+  --brand-periwinkle: var(--as-accent);
+  --brand-teal: var(--as-code-key);
+  --brand-teal-light: var(--as-code-key);
 
-  --bg-page: #0b0f1a;
-  --bg-section: #0f1629;
-  --bg-card: rgba(15, 23, 42, 0.7);
-  --bg-card-hover: rgba(22, 32, 50, 0.9);
-  --bg-elevated: #1a1f35;
-  --bg-input: rgba(30, 41, 59, 0.5);
-  --bg-glass: rgba(124, 58, 237, 0.06);
+  /* Flat, not gradients. The names survive so component CSS keeps resolving. */
+  --gradient-primary: var(--as-accent);
+  --gradient-btn: var(--as-accent);
+  --gradient-btn-hover: var(--as-accent-hover);
+  --on-accent: var(--as-ink);          /* Ink on the violet accent: 6.3:1 */
 
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  --text-heading: #f1f5f9;
+  --bg-page: var(--as-ink);
+  --bg-section: var(--as-panel);
+  --bg-card: var(--as-panel);
+  --bg-card-hover: var(--as-harbor);
+  --bg-elevated: var(--as-harbor);
+  --bg-input: var(--as-panel);
+  --bg-glass: rgba(166, 133, 238, 0.06);
 
-  --border: rgba(148, 163, 184, 0.1);
-  --border-hover: rgba(124, 58, 237, 0.4);
-  --border-card: rgba(148, 163, 184, 0.08);
+  --text-primary: var(--as-text);      /* body copy — 11.9:1 on Ink */
+  --text-secondary: var(--as-muted);   /* 8.2:1 */
+  --text-muted: #8A979E;               /* 6.2:1 — still AA, the dimmest step */
+  --text-heading: var(--as-fog);       /* headings — never pure white */
 
-  --glow-primary: rgba(124, 58, 237, 0.4);
-  --glow-teal: rgba(52, 211, 153, 0.3);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
-  --shadow-card-hover: 0 8px 40px rgba(124, 58, 237, 0.15), 0 4px 20px rgba(0,0,0,0.3);
+  --border: var(--as-line);
+  --border-hover: rgba(166, 133, 238, 0.40);
+  --border-card: var(--as-line-strong);
+
+  /* No glows. Kept as names, valued at transparent, so the radial-gradient and
+     box-shadow rules that reference them render nothing. */
+  --glow-primary: transparent;
+  --glow-teal: transparent;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* ═══════════════ LIGHT THEME ═══════════════ */
-/* Tinted cool-gray base with clear card separation */
+/* Paper ground, Ink headings, and the on-light accent #6A47C2 — the dark-mode
+   accent does not carry enough contrast as text on a light ground. */
 [data-theme="light"] {
-  --brand-indigo: #7c3aed;
-  --brand-indigo-hover: #6d28d9;
-  --brand-indigo-light: #6d28d9;
-  --brand-indigo-lighter: #8b5cf6;
-  --brand-periwinkle: #6366f1;
-  --brand-teal: #0d9668;
-  --brand-teal-light: #10b981;
+  color-scheme: light;
 
-  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #0d9668 100%);
-  --gradient-btn: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-  --gradient-btn-hover: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+  --brand-indigo: var(--as-accent-on-light);
+  --brand-indigo-hover: #4F3A9E;
+  --brand-indigo-light: var(--as-accent-on-light);
+  --brand-indigo-lighter: #4F3A9E;
+  --brand-periwinkle: var(--as-accent-on-light);
+  --brand-teal: #0F7A6E;
+  --brand-teal-light: #0F7A6E;
 
-  --bg-page: #f5f4f8;
-  --bg-section: #eceaf2;
-  --bg-card: rgba(255, 255, 255, 0.72);
-  --bg-card-hover: rgba(255, 255, 255, 0.88);
-  --bg-elevated: #e4e2ec;
-  --bg-input: rgba(255, 255, 255, 0.55);
-  --bg-glass: rgba(124, 58, 237, 0.05);
+  --gradient-primary: var(--as-accent-on-light);
+  --gradient-btn: var(--as-accent-on-light);
+  --gradient-btn-hover: #4F3A9E;
+  --on-accent: var(--as-fog);          /* Fog on the violet accent: 5.4:1 */
 
-  --text-primary: #1a1726;
-  --text-secondary: #3d3a50;
-  --text-muted: #706c88;
-  --text-heading: #0e0c1a;
+  --bg-page: var(--as-paper);
+  --bg-section: #E8EEF0;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FFFFFF;
+  --bg-elevated: #E8EEF0;
+  --bg-input: #FFFFFF;
+  --bg-glass: rgba(106, 71, 194, 0.05);
 
-  --border: rgba(0, 0, 0, 0.1);
-  --border-hover: rgba(124, 58, 237, 0.35);
-  --border-card: rgba(0, 0, 0, 0.08);
+  --text-primary: #2B3840;             /* 10.3:1 on Paper */
+  --text-secondary: #55656E;           /* 5.5:1 */
+  --text-muted: #5F6D75;               /* 4.9:1 */
+  --text-heading: var(--as-ink);
 
-  --glow-primary: rgba(124, 58, 237, 0.12);
-  --glow-teal: rgba(13, 150, 104, 0.12);
-  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-card-hover: 0 8px 30px rgba(124, 58, 237, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+  --border: #CBD5DA;
+  --border-hover: rgba(106, 71, 194, 0.35);
+  --border-card: #CBD5DA;
+
+  --glow-primary: transparent;
+  --glow-teal: transparent;
+  --shadow-card: 0 1px 3px rgba(13, 19, 23, 0.07);
+  --shadow-card-hover: 0 4px 14px rgba(13, 19, 23, 0.10);
 }
 
 /* ═══════════════ RESET ═══════════════ */
@@ -93,18 +142,29 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--as-font-text);
   background: var(--bg-page);
   color: var(--text-primary);
   line-height: 1.6;
   transition: background 0.3s, color 0.3s;
 }
 
+h1, h2, h3, h4 {
+  font-family: var(--as-font-display);
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+}
+
+code, pre, kbd { font-family: var(--as-font-mono); }
+
 a { color: var(--brand-indigo-light); text-decoration: none; transition: color 0.15s; }
-a:hover { color: var(--brand-indigo); }
+a:hover { color: var(--brand-indigo-hover); }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 img { max-width: 100%; display: block; }
+
+/* The accent doubles as the focus ring, per the kit. */
+:focus-visible { outline: 2px solid var(--as-accent); outline-offset: 2px; }
 
 /* ═══════════════ LAYOUT HELPERS ═══════════════ */
 .section {
@@ -128,7 +188,7 @@ img { max-width: 100%; display: block; }
 
 .section-title {
   font-size: clamp(1.75rem, 3.5vw, 2.25rem);
-  font-weight: 800;
+  font-weight: 700;              /* the kit sets headlines at 700 */
   color: var(--text-heading);
   text-align: center;
   margin-bottom: 0.75rem;
@@ -144,13 +204,11 @@ img { max-width: 100%; display: block; }
   line-height: 1.6;
 }
 
-/* ═══════════════ GRADIENT TEXT ═══════════════ */
-.gradient-text {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* ═══════════════ ACCENT TEXT ═══════════════ */
+/* Was a three-stop gradient clipped to the text. The kit allows no gradients, and
+   allows the accent on exactly one emphasised phrase per screen — so this is now
+   a flat accent colour. The class name is unchanged to keep call sites working. */
+.gradient-text { color: var(--brand-indigo); }
 
 /* ═══════════════ SCROLLBAR ═══════════════ */
 ::-webkit-scrollbar { width: 6px; }

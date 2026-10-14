@@ -1,21 +1,29 @@
+import { Logo } from './Logo'
 import styles from './Footer.module.css'
+
+/* Every link here points at Agent-Ship/agent-ship. The previous set pointed at
+   harshuljain13/ship-ai-agents, which is not where this project lives, and
+   described the licence as MIT, which it is not — it is Apache 2.0. */
+const REPO = 'https://github.com/Agent-Ship/agent-ship'
 
 const COLS = {
   Project: [
     { label: 'Documentation', href: 'https://docs.agent-ship.dev/' },
-    { label: 'GitHub', href: 'https://github.com/harshuljain13/ship-ai-agents' },
-    { label: 'Issues', href: 'https://github.com/harshuljain13/ship-ai-agents/issues' },
-    { label: 'License (MIT)', href: 'https://github.com/harshuljain13/ship-ai-agents/blob/main/ai/ai-ecosystem/LICENSE' },
+    { label: 'GitHub', href: REPO },
+    { label: 'Issues', href: `${REPO}/issues` },
+    { label: 'PyPI', href: 'https://pypi.org/project/agentship-sdk/' },
+    { label: 'License (Apache 2.0)', href: `${REPO}/blob/main/LICENSE` },
   ],
   Resources: [
-    { label: 'Quick Start', href: 'https://docs.agent-ship.dev/en/latest/user-guides/getting-started/quickstart.html' },
-    { label: 'Architecture', href: 'https://docs.agent-ship.dev/en/latest/index.html#architecture' },
-    { label: 'Postman Collection', href: 'https://github.com/harshuljain13/ship-ai-agents/tree/main/ai/ai-ecosystem/postman' },
-    { label: 'Articles', href: 'https://github.com/harshuljain13/ship-ai-agents/tree/main/ai/articles' },
+    { label: 'Quick start', href: `${REPO}#quick-start` },
+    { label: 'Capability guides', href: `${REPO}/tree/main/docs/capabilities` },
+    { label: 'Examples', href: `${REPO}/tree/main/examples` },
+    { label: 'Postman collection', href: `${REPO}/tree/main/postman` },
+    { label: 'Changelog', href: `${REPO}/blob/main/docs/CHANGELOG.md` },
   ],
   Community: [
-    { label: 'Contributing', href: 'https://github.com/harshuljain13/ship-ai-agents/blob/main/ai/ai-ecosystem/CODE_OF_CONDUCT.md' },
-    { label: 'Discord', href: 'https://discord.gg/zCEtKH2P' },
+    { label: 'Contributing', href: `${REPO}/blob/main/CONTRIBUTING.md` },
+    { label: 'Code of conduct', href: `${REPO}/blob/main/CODE_OF_CONDUCT.md` },
   ],
 }
 
@@ -27,11 +35,10 @@ export function Footer() {
         {/* Brand */}
         <div className={styles.brand}>
           <div className={styles.logo}>
-            <span className={styles.logoAgent}>Agent</span>
-            <span className={styles.logoShip}>Ship</span>
+            <Logo markSize={24} fontSize="1.15rem" />
           </div>
           <p className={styles.tagline}>
-            Build and deploy AI agents<br />in minutes, not weeks.
+            Production plumbing for AI agents,<br />without the rewrite.
           </p>
         </div>
 
@@ -53,10 +60,10 @@ export function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <span>© {yr} AgentShip. All rights reserved.</span>
+        <span>© {yr} AgentShip contributors. Apache 2.0.</span>
         <div className={styles.bottomLinks}>
-          <a href="https://github.com/harshuljain13/ship-ai-agents" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT License</a>
+          <a href={REPO} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache License 2.0</a>
         </div>
       </div>
     </footer>

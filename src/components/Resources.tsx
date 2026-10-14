@@ -1,12 +1,18 @@
 import styles from './Resources.module.css'
 
+/* Docs paths are the MkDocs ones (`capabilities/<page>.html`, since the site is
+   built with use_directory_urls: false). The old `/en/latest/...` prefix was
+   left over from a Sphinx/ReadTheDocs layout, and two of these pointed at
+   harshuljain13/ship-ai-agents, which is not this project's repo. */
+const REPO = 'https://github.com/Agent-Ship/agent-ship'
+
 const ITEMS = [
-  { title: 'Quick Start', desc: 'From zero to running agent in 3 commands', link: 'Docs', href: 'https://docs.agent-ship.dev/en/latest/user-guides/getting-started/quickstart.html' },
-  { title: 'Architecture', desc: 'How AgentShip is structured under the hood', link: 'Docs', href: 'https://docs.agent-ship.dev/en/latest/index.html#architecture' },
-  { title: 'Agent Patterns', desc: 'Single agent, orchestrator, and tool patterns', link: 'Docs', href: 'https://docs.agent-ship.dev/en/latest/building-agents.html' },
-  { title: 'Agent Config', desc: 'YAML config reference — engines, streaming, memory', link: 'Docs', href: 'https://docs.agent-ship.dev/en/latest/user-guides/building-agents/agent-configuration.html' },
-  { title: 'Postman Collection', desc: 'Ready-to-use API collection for testing', link: 'GitHub', href: 'https://github.com/harshuljain13/ship-ai-agents/tree/main/ai/ai-ecosystem/postman' },
-  { title: 'Articles', desc: 'Blog posts on agentic AI patterns and design', link: 'GitHub', href: 'https://github.com/harshuljain13/ship-ai-agents/tree/main/ai/articles' },
+  { title: 'Quick start', desc: 'Install, write one YAML file, run it', link: 'Docs', href: 'https://docs.agent-ship.dev/capabilities/foundation.html' },
+  { title: 'Engine & agent', desc: 'The spec reference — engines, prompts, tools, streaming', link: 'Docs', href: 'https://docs.agent-ship.dev/capabilities/engine-and-agent.html' },
+  { title: 'Multi-agent', desc: 'A coordinator that routes on each member\'s description', link: 'Docs', href: 'https://docs.agent-ship.dev/capabilities/multi-agent.html' },
+  { title: 'Observability', desc: 'Span trees per turn, with token counts and costs', link: 'Docs', href: 'https://docs.agent-ship.dev/capabilities/observability.html' },
+  { title: 'Postman collection', desc: 'Ready-to-use API collection for testing', link: 'GitHub', href: `${REPO}/tree/main/postman` },
+  { title: 'Examples', desc: 'Runnable specs you can copy', link: 'GitHub', href: `${REPO}/tree/main/examples` },
 ]
 
 export function Resources() {

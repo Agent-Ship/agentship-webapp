@@ -115,15 +115,15 @@
 }
 
 .badge_shipped {
-  background: rgba(52, 211, 153, 0.12);
+  background: rgba(92, 207, 192, 0.12);
   color: var(--brand-teal);
 }
 .badge_building {
-  background: rgba(124, 58, 237, 0.12);
+  background: rgba(166, 133, 238, 0.12);
   color: var(--brand-indigo-light);
 }
 .badge_planned {
-  background: rgba(100, 116, 139, 0.12);
+  background: var(--bg-elevated);
   color: var(--text-muted);
 }
 
@@ -138,8 +138,20 @@
   font-size: 0.95rem;
   line-height: 1.65;
   color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  max-width: 580px;
+}
+
+.milestone {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
   max-width: 580px;
+}
+
+.milestone strong {
+  color: var(--brand-indigo-light);
 }
 
 /* ─── Items ─── */
@@ -207,15 +219,15 @@
   gap: 6px;
   padding: 0.6rem 1.4rem;
   background: var(--gradient-btn);
-  color: #fff !important;
+  color: var(--on-accent) !important;
   font-size: 0.875rem;
   font-weight: 600;
-  border-radius: 8px;
-  transition: box-shadow 0.2s, transform 0.1s;
+  border-radius: var(--as-radius-chip);
+  transition: background 0.2s;
   text-decoration: none;
 }
 .ctaBtn:hover {
-  box-shadow: 0 0 20px var(--glow-primary);
+  background: var(--gradient-btn-hover);
   transform: translateY(-1px);
   text-decoration: none;
 }
