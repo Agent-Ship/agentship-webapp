@@ -10,172 +10,80 @@ interface ChangelogEntry {
   link?: string
 }
 
+/*
+ * Summarised from the project's own changelog — docs/CHANGELOG.md in
+ * Agent-Ship/agent-ship, which is the source GitHub release notes are generated
+ * from. Keep this in step with it; do not invent entries here.
+ *
+ * The previous list described a different codebase: a Google ADK engine, an
+ * `agentship mcp connect` CLI, an `SSEMCPClient`, Fernet token storage — none of
+ * which exist — and linked to AgentShippingKit/agent-ship and
+ * harshuljain13/ship-ai-agents rather than to this project.
+ */
+const REPO = 'https://github.com/Agent-Ship/agent-ship'
+
 const CHANGELOG: ChangelogEntry[] = [
   {
-    date: '2026-03-01',
-    title: 'Remote MCP Integration with HTTP/OAuth Transport',
+    date: '2026-10-11',
+    version: '0.0.4',
+    title: 'Voice turn-taking, and a Studio renderer that survives streaming',
     highlights: [
-      'HTTP/OAuth MCP transport (SSEMCPClient) for remote servers like GitHub and Slack',
-      'Per-agent OAuth client isolation — prevents token cross-contamination between agents',
-      'Environment variable resolution: ${VAR} tokens in MCP command args resolved at load time',
-      'OAuth 2.0 flow with encrypted token storage (Fernet) in PostgreSQL',
-      'CLI commands: agentship mcp connect / list-connections / disconnect',
-      'GitHub MCP agent examples for both ADK and LangGraph engines',
-      'Comprehensive integration test suite — 7 new test files covering naming, isolation, streaming, and MCP transport',
-      'Debug UI Stop button — abort in-flight streaming responses mid-stream',
+      'The agent no longer hears itself: an EchoGuard drops a transcript made of the words TTS is currently speaking, while letting a human talking over it through',
+      'Your own questions appear on screen again — the client is now told what the human said, driven through the real pipeline',
+      'Barge-in is seen as fast as the recogniser allows: `openai-realtime` reports partial words as they are spoken, and `interrupt_min_words` is a real field rather than a dead getattr',
+      'Studio renders what a model actually writes — numbered and nested lists, headings anywhere, blockquotes, and code fences that are safe mid-stream',
     ],
     type: 'release',
-    link: 'https://github.com/Agent-Ship/agent-ship/pull/17',
+    link: `${REPO}/blob/main/docs/CHANGELOG.md`,
   },
   {
-    date: '2026-02-24',
-    title: 'MCP (Model Context Protocol) STDIO Integration',
+    date: '2026-10-05',
+    version: '0.0.3',
+    title: 'Voice, and a long list of durability fixes',
     highlights: [
-      'Full MCP server integration with STDIO transport for external tools',
-      'Dual engine support — MCP works identically with both ADK and LangGraph',
-      'Auto tool discovery and documentation via PromptBuilder',
-      'Event loop-safe reconnection for production web servers',
-      'Dynamic schema extraction for proper tool parameter handling',
-      '66 tests including 37 new critical unit tests for MCP components',
-      'GitHub Actions CI/CD workflows for automated testing on PRs',
+      '`agentship-voice`: talk to an agent over `WS /v1/agents/{name}/voice`, declared with a `voice:` block — same spec, same memory, same tools, same trace',
+      'A spoken turn is traced like any other: a `voice.turn` span with `ttft_ms` kept apart from `total_ms`, and six voice conformance cells including an 850 ms first-audio budget',
+      'Fixed: an agent had no conversation memory on any path, and two tenants could read each other\'s conversations',
+      'Fixed: a crash could fire a side-effecting tool twice, and a resume token could be pointed at someone else\'s conversation',
+      'Fixed: `durability: checkpoint` fell back to memory without a word; streamed turns were never checkpointed at all',
+      'Every tracing backend — Phoenix, Opik, LangSmith, Langfuse — now proves delivery in CI',
     ],
     type: 'release',
-    link: 'https://github.com/AgentShippingKit/agent-ship/pull/15',
+    link: `${REPO}/blob/main/docs/CHANGELOG.md`,
   },
   {
-    date: '2026-02-10',
-    title: 'LangGraph Engine + Streaming + Opik Observability',
+    date: '2026-09-07',
+    version: '0.0.2',
+    title: 'The first release that can actually run an agent',
     highlights: [
-      'Added LangGraph as a second execution engine alongside Google ADK — configurable per agent via YAML',
-      'True token-by-token SSE streaming via LangGraph + LiteLLM',
-      'Opik observability integration for both ADK and LangGraph engines',
-      'Major refactor: factories for engines, tools, memory, and observability',
-      'New session adapters for ADK and LangGraph with PostgreSQL persistence',
-      'Added Sphinx docs requirements for Read the Docs deployment',
+      'An agent runs without the observability adapter installed — `provider` no longer defaults to a package that is not in `[starter]`',
+      'A tag now publishes: the release workflow\'s tag trigger had been commented out, so pushing a tag did nothing',
+      'The release gate runs the README quickstart keyless, in a clean directory, so a broken quickstart fails the release',
     ],
     type: 'release',
-    link: 'https://github.com/harshuljain13/ship-ai-agents/commit/d5fe6e0',
+    link: `${REPO}/blob/main/docs/CHANGELOG.md`,
   },
   {
-    date: '2026-01-11',
-    title: 'Improved Heroku Deployment',
+    date: '2026-09-06',
+    version: '0.0.1',
+    title: 'Name reservation — yanked',
     highlights: [
-      'Enhanced Heroku deploy scripts with better error handling',
-      'Fixed Procfile and environment variable configuration',
+      'Reserved the package names on PyPI, but could not run an agent: tracing was on by default and the adapter is not in `[starter]`, so every run failed with "observability provider \'otel\' is not installed"',
+      'Yanked, so every resolver skips it — a plain `pip install` gets a working version',
+      'Also shipped the conformance catalogue as the vendor-free `agentship.conformance` module, and the `agentship verify` CLI behind it',
     ],
-    type: 'feature',
-    link: 'https://github.com/harshuljain13/ship-ai-agents/commit/f992d19',
+    type: 'release',
+    link: `${REPO}/blob/main/docs/CHANGELOG.md`,
   },
   {
-    date: '2026-01-01',
-    version: 'v1.0.0',
-    title: 'Documentation, Branding & Architecture',
+    date: '2026-08-07',
+    title: 'Rebuilt foundation-first',
     highlights: [
-      'Full Sphinx documentation with Furo theme — quickstart, building agents, patterns, API reference',
-      'Architecture documentation with system diagram',
-      'AgentShip branding: logos, icons, favicons, and GitHub banner',
-      'Debug UI URL added to Docker setup output',
-      'README overhaul with technology badges',
+      'AgentShip was rebuilt from the ground up: one thin working slice per phase, with tests and a runnable demo before anything is called done',
+      'The entries above are the published history. Work before the rebuild lived in a predecessor repository, on a different engine and a different licence, and is not part of these packages',
     ],
     type: 'docs',
-    link: 'https://github.com/harshuljain13/ship-ai-agents/commit/90d003f',
-  },
-  {
-    date: '2025-12-31',
-    title: 'Open-Source Cleanup',
-    highlights: [
-      'Generalized agent examples — removed domain-specific content',
-      'Cleaned up redundant documentation and sync scripts',
-    ],
-    type: 'fix',
-  },
-  {
-    date: '2025-12-29',
-    title: 'Debug UI & Streaming',
-    highlights: [
-      'Built-in Debug UI for testing agents in the browser',
-      'SSE streaming support for agent chat responses',
-      'Added AI articles on agentic patterns',
-    ],
-    type: 'feature',
-  },
-  {
-    date: '2025-12-26',
-    title: 'Sphinx Docs & Docker Setup',
-    highlights: [
-      'Migrated docs to Sphinx with Markdown + RST support',
-      'Makefile commands for building and serving docs',
-      'Docker Compose setup with PostgreSQL and hot-reload',
-      'One-command `make docker-setup`',
-    ],
-    type: 'feature',
-  },
-  {
-    date: '2025-12-22',
-    title: 'Agent Tools & Testing',
-    highlights: [
-      'Added composable agent tools (action items, Azure artifact reading)',
-      'YAML-based tool configuration with function and agent tool types',
-      'Unit and integration test suite',
-      'Code modularization following DRY principles',
-    ],
-    type: 'feature',
-  },
-  {
-    date: '2025-12-12',
-    title: 'A2A Protocol & Heroku Fix',
-    highlights: [
-      'Conversation insights via A2A (Agent-to-Agent) protocol',
-      'Fixed Heroku build by resolving Pipfile.lock conflicts',
-    ],
-    type: 'fix',
-  },
-  {
-    date: '2025-10-08',
-    title: 'Initial Open-Source Release',
-    highlights: [
-      'Production-ready AI agents framework — open sourced under MIT',
-      'Google ADK-based agent engine with YAML configuration',
-      'Auto-discovery: drop in a folder, agent registers itself',
-      'FastAPI REST API with session management',
-      'Three agent patterns: single agent, orchestrator, and tool-based',
-      'PostgreSQL session storage with in-memory fallback',
-      'Heroku deployment scripts',
-      'Postman collection for API testing',
-    ],
-    type: 'release',
-    link: 'https://github.com/harshuljain13/ship-ai-agents/commit/1fdba8d',
-  },
-  {
-    date: '2025-10-04',
-    title: 'Agent Patterns & Observability',
-    highlights: [
-      'Translation agent as single-agent pattern example',
-      'Supervisor agent (orchestrator) pattern example',
-      'Basic observability layer',
-      'Tool support for agents',
-    ],
-    type: 'feature',
-  },
-  {
-    date: '2025-09-27',
-    title: 'Heroku Deployment & Dynamic API',
-    highlights: [
-      'First Heroku deployment with gunicorn',
-      'Dynamic API model accepting multiple query types',
-      'Architecture diagram',
-    ],
-    type: 'feature',
-  },
-  {
-    date: '2025-09-24',
-    title: 'Project Genesis',
-    highlights: [
-      'Initial framework setup for AI agents',
-      'Service layer with FastAPI chat endpoints',
-      'Environment-based configuration',
-    ],
-    type: 'release',
+    link: `${REPO}/blob/main/CONTRIBUTING.md`,
   },
 ]
 

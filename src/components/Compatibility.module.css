@@ -65,9 +65,12 @@
   border-radius: 10px;
   flex-shrink: 0;
 }
-.teal .cardIcon { color: var(--brand-teal); }
-.purple .cardIcon { color: var(--brand-indigo-light); }
-.blue .cardIcon { color: var(--brand-periwinkle); }
+/* Accent for the two that matter (the shipped engines), neutral for the rest —
+   the kit allows one accent, spent on emphasis rather than on categories. */
+.teal .cardIcon { color: var(--brand-indigo); }
+.purple .cardIcon { color: var(--brand-indigo); }
+.blue .cardIcon { color: var(--text-secondary); }
+.mixed .cardIcon { color: var(--text-muted); }
 
 /* ─── Body ─── */
 .cardBody { min-width: 0; }
@@ -86,8 +89,8 @@
   font-size: 0.6rem;
   font-weight: 700;
   border-radius: 4px;
-  background: rgba(52, 211, 153, 0.15);
-  color: var(--brand-teal);
+  background: rgba(166, 133, 238, 0.14);
+  color: var(--brand-indigo);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }

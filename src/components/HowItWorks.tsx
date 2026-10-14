@@ -1,46 +1,135 @@
 import styles from './HowItWorks.module.css'
 
-function YamlCode() {
-  const k = styles.hlKey
-  const v = styles.hlVal
-  const s = styles.hlStr
-  const c = styles.hlComment
-  const p = styles.hlPunct
+/*
+ * Two code samples: the YAML spec, and the Python escape hatch.
+ *
+ * These used to be hand-tagged — every token wrapped in its own <span> in the
+ * JSX. That broke (a string literal cannot span a newline, so `{'` + newline +
+ * `'}` is a syntax error) and it advertised spec fields that do not exist:
+ * `input_modalities`, `structured_output`, `memory.backend` and `guardrails`.
+ * Memory and guardrails are on the roadmap, not in the tree.
+ *
+ * So the code is now plain text, highlighted by the tiny tokeniser below. Both
+ * samples are the real thing: the YAML uses only fields `AgentSpec` actually
+ * accepts, and the Python is the `LangGraphAgent.build_graph` shape from
+ * examples/custom/agent.py.
+ */
 
+const SPEC_YAML = `# A coordinator routes each request to the member whose description fits.
+name: triage-agent
+engine: langgraph
+template: graph          # single | graph | autonomous
+model: openai/gpt-4o-mini
+prompt: Route the request, then answer it.
+durability: checkpoint   # survive a restart, and pause for a human
+streaming: true
+members:
+  - name: analyst
+    description: arithmetic and comparisons over known numbers
+    model: openai/gpt-4o-mini
+    prompt: Answer with the number and one short sentence.
+  - name: writer
+    description: explanations, summaries, anything needing prose
+    model: anthropic/claude-sonnet-4-6
+    prompt: Answer in two clear sentences.`
+
+const AGENT_PY = `from agentship.spec import AgentSpec
+from agentship_langgraph import LangGraphAgent
+from langgraph.graph import END, START, StateGraph
+
+
+class EchoingAssistant(LangGraphAgent):
+    def build_graph(self, model, tools):
+        # Native LangGraph. AgentShip supplies the model and drives the run.
+        def answer(state):
+            reply = model.invoke(state["messages"])
+            return {"messages": [*state["messages"], reply]}
+
+        g = StateGraph(_State)
+        g.add_node("answer", answer)
+        g.add_edge(START, "answer")
+        g.add_edge("answer", END)
+        return g
+
+
+def build_agent():
+    return EchoingAssistant(AgentSpec(name="custom-assistant", engine="langgraph"))`
+
+const PY_KEYWORDS = new Set([
+  'from', 'import', 'class', 'def', 'return', 'self', 'for', 'in', 'if', 'else', 'None', 'True', 'False',
+])
+
+type Token = { text: string; cls?: string }
+
+/** Split `line` on a regex, tagging matches with `cls` and recursing on the rest. */
+function split(tokens: Token[], re: RegExp, cls: string, then: (t: Token[]) => Token[]): Token[] {
+  return tokens.flatMap((tok) => {
+    if (tok.cls) return [tok]
+    const out: Token[] = []
+    let last = 0
+    for (const m of tok.text.matchAll(re)) {
+      const i = m.index ?? 0
+      if (i > last) out.push(...then([{ text: tok.text.slice(last, i) }]))
+      out.push({ text: m[0], cls })
+      last = i + m[0].length
+    }
+    if (last < tok.text.length) out.push(...then([{ text: tok.text.slice(last) }]))
+    return out
+  })
+}
+
+function highlightYaml(line: string): Token[] {
+  let toks: Token[] = [{ text: line }]
+  toks = split(toks, /#.*$/g, styles.hlComment, (t) => t)
+  // A key is the first word before a colon, at any indent, optionally after "- ".
+  toks = split(toks, /^(\s*-\s+)?[A-Za-z_][\w-]*(?=:)/g, styles.hlKey, (t) => t)
+  toks = split(toks, /[:[\]{},]|^\s*-\s/g, styles.hlPunct, (t) => t)
+  return toks.map((t) => (t.cls ? t : { ...t, cls: styles.hlVal }))
+}
+
+function highlightPython(line: string): Token[] {
+  let toks: Token[] = [{ text: line }]
+  toks = split(toks, /#.*$/g, styles.hlComment, (t) => t)
+  toks = split(toks, /"[^"]*"/g, styles.hlStr, (t) => t)
+  toks = split(toks, /\b[A-Za-z_]\w*\b/g, '', (t) => t)
+  // Re-tag the bare words: keyword, type (CapCase), or plain.
+  toks = toks.map((t) => {
+    if (t.cls !== '') return t
+    if (PY_KEYWORDS.has(t.text)) return { ...t, cls: styles.hlKw }
+    if (/^[A-Z_]/.test(t.text)) return { ...t, cls: styles.hlType }
+    return { ...t, cls: styles.hlFn }
+  })
+  return toks.map((t) => (t.cls ? t : { ...t, cls: styles.hlPunct }))
+}
+
+function Code({ source, lang }: { source: string; lang: 'yaml' | 'python' }) {
+  const highlight = lang === 'yaml' ? highlightYaml : highlightPython
   return (
     <code>
-      <span className={k}>agent_name</span><span className={p}>: </span><span className={v}>my_agent</span>{'\n'}
-      <span className={k}>llm_provider_name</span><span className={p}>: </span><span className={v}>openai</span>{'\n'}
-      <span className={k}>llm_model</span><span className={p}>: </span><span className={v}>gpt-4o</span>{'\n'}
-      <span className={k}>temperature</span><span className={p}>: </span><span className={v}>0.4</span>{'\n'}
-      <span className={k}>execution_engine</span><span className={p}>: </span><span className={v}>adk</span>      <span className={c}># swap to langgraph</span>{'\n'}
-      <span className={k}>description</span><span className={p}>: </span><span className={s}>A helpful assistant</span>{'\n'}
-      <span className={k}>instruction_template</span><span className={p}>: </span><span className={p}>|</span>{'\n'}
-      <span className={s}>  You are a helpful assistant.</span>
+      {source.split('\n').map((line, i) => (
+        <span key={i} className={styles.line}>
+          {highlight(line).map((tok, j) => (
+            <span key={j} className={tok.cls}>
+              {tok.text}
+            </span>
+          ))}
+          {'\n'}
+        </span>
+      ))}
     </code>
   )
 }
 
-function PythonCode() {
-  const kw = styles.hlKw
-  const fn = styles.hlFn
-  const v = styles.hlVal
-  const p = styles.hlPunct
-
+function CodeBlock({ file, source, lang }: { file: string; source: string; lang: 'yaml' | 'python' }) {
   return (
-    <code>
-      <span className={kw}>from</span> <span className={v}>src.all_agents.base_agent</span> <span className={kw}>import</span> <span className={fn}>BaseAgent</span>{'\n'}
-      <span className={kw}>from</span> <span className={v}>src.service.models.base_models</span> <span className={kw}>import</span> <span className={fn}>TextInput</span><span className={p}>, </span><span className={fn}>TextOutput</span>{'\n'}
-      <span className={kw}>from</span> <span className={v}>src.agent_framework.utils.path_utils</span> <span className={kw}>import</span> <span className={fn}>resolve_config_path</span>{'\n'}
-      {'\n'}
-      <span className={kw}>class</span> <span className={fn}>MyAgent</span><span className={p}>(</span><span className={fn}>BaseAgent</span><span className={p}>):</span>{'\n'}
-      {'    '}<span className={kw}>def</span> <span className={fn}>__init__</span><span className={p}>(</span><span className={v}>self</span><span className={p}>):</span>{'\n'}
-      {'        '}<span className={v}>super</span><span className={p}>().</span><span className={fn}>__init__</span><span className={p}>(</span>{'\n'}
-      {'            '}<span className={v}>config_path</span><span className={p}>=</span><span className={fn}>resolve_config_path</span><span className={p}>(</span><span className={v}>relative_to</span><span className={p}>=</span><span className={v}>__file__</span><span className={p}>),</span>{'\n'}
-      {'            '}<span className={v}>input_schema</span><span className={p}>=</span><span className={fn}>TextInput</span><span className={p}>,</span>{'\n'}
-      {'            '}<span className={v}>output_schema</span><span className={p}>=</span><span className={fn}>TextOutput</span><span className={p}>,</span>{'\n'}
-      {'        '}<span className={p}>)</span>
-    </code>
+    <div className={styles.codeBlock}>
+      <div className={styles.codeHeader}>
+        <span className={styles.fileName}>{file}</span>
+      </div>
+      <pre className={styles.codeBody}>
+        <Code source={source} lang={lang} />
+      </pre>
+    </div>
   )
 }
 
@@ -48,41 +137,23 @@ export function HowItWorks() {
   return (
     <section className="section">
       <div className="container">
-        <p className="section-label" style={{ textAlign: 'center' }}>How it works</p>
-        <h2 className="section-title">Two files. That's an agent.</h2>
+        <p className="section-label" style={{ textAlign: 'center' }}>The pattern</p>
+        <h2 className="section-title">YAML for the wiring. Python when you need it.</h2>
         <p className="section-subtitle">
-          YAML for config, Python for logic. Auto-discovery registers agents on
-          startup – no wiring, no routing, no registration code.
+          Most agents are the spec on the left and nothing else. When one needs a graph the spec
+          cannot express, point `code:` at a Python function and write native LangGraph — AgentShip
+          still supplies the model and tools, and still drives the run.
         </p>
 
         <div className={styles.codeGrid}>
-          <div className={styles.codeBlock}>
-            <div className={styles.codeHeader}>
-              <span className={styles.codeDot} style={{ background: '#ff5f57' }} />
-              <span className={styles.codeDot} style={{ background: '#febc2e' }} />
-              <span className={styles.codeDot} style={{ background: '#28c840' }} />
-              <span className={styles.fileName}>main_agent.yaml</span>
-            </div>
-            <pre className={styles.codeBody}>
-              <YamlCode />
-            </pre>
-          </div>
-
-          <div className={styles.codeBlock}>
-            <div className={styles.codeHeader}>
-              <span className={styles.codeDot} style={{ background: '#ff5f57' }} />
-              <span className={styles.codeDot} style={{ background: '#febc2e' }} />
-              <span className={styles.codeDot} style={{ background: '#28c840' }} />
-              <span className={styles.fileName}>main_agent.py</span>
-            </div>
-            <pre className={styles.codeBody}>
-              <PythonCode />
-            </pre>
-          </div>
+          <CodeBlock file="agents/triage.yaml" source={SPEC_YAML} lang="yaml" />
+          <CodeBlock file="agents/triage/agent.py" source={AGENT_PY} lang="python" />
         </div>
 
         <p className={styles.note}>
-          Change <code>execution_engine: adk</code> to <code>langgraph</code> – your Python class stays the same.
+          Two engines ship today: <code>langgraph</code> and <code>echo</code>, which needs no
+          provider and no network. The adapter is the only code that names a vendor, so a third
+          engine is a package rather than a rewrite.
         </p>
       </div>
     </section>

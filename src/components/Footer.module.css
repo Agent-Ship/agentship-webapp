@@ -13,14 +13,8 @@
 }
 
 .brand { min-width: 200px; }
-.logo {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.75rem;
-}
-.logoAgent { color: var(--text-heading); }
-.logoShip { color: var(--brand-periwinkle); }
+/* Spacing only — the lockup is Logo.module.css's job. */
+.logo { margin-bottom: 0.75rem; }
 .tagline { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
 
 .columns { display: flex; gap: 3rem; flex: 1; }

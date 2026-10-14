@@ -18,18 +18,14 @@
   justify-content: space-between;
 }
 
-/* Logo — prominent */
+/* Logo. Type and colour live in Logo.module.css so the lockup cannot drift
+   between the header, the footer and the hero. */
 .logo {
   display: flex;
-  align-items: baseline;
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  align-items: center;
   text-decoration: none;
 }
 .logo:hover { text-decoration: none; }
-.logoAgent { color: var(--text-heading); }
-.logoShip { color: var(--brand-periwinkle); }
 
 /* Nav */
 .nav { display: flex; align-items: center; gap: 0.25rem; }
@@ -59,13 +55,13 @@
 .cta {
   padding: 0.5rem 1.25rem;
   background: var(--gradient-btn);
-  color: #fff !important;
+  color: var(--on-accent) !important;
   font-size: 0.85rem;
   font-weight: 600;
-  border-radius: 8px;
-  transition: box-shadow 0.2s, transform 0.1s;
+  border-radius: var(--as-radius-chip);
+  transition: background 0.2s;
 }
-.cta:hover { box-shadow: 0 0 20px var(--glow-primary); transform: translateY(-1px); text-decoration: none; }
+.cta:hover { background: var(--gradient-btn-hover); text-decoration: none; }
 
 .burger { display: none; color: var(--text-secondary); padding: 6px; }
 

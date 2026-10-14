@@ -1,23 +1,27 @@
 import styles from './Ecosystem.module.css'
 
+/* The seven distributions that actually exist and are released together on one
+   version. The list previously advertised agentship-memory, -guardrails and
+   -mcp, none of which are published, and gave the CLI commands `deploy`,
+   `studio` and `eval`, none of which exist. */
 const PROJECTS = [
-  { name: 'Agent Framework', tag: 'YAML-based config with auto-discovery and registry', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/src/agent_framework' },
-  { name: 'Execution Engines', tag: 'Google ADK and LangGraph — swappable via YAML', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/src/agent_framework/engines' },
-  { name: 'MCP Integration', tag: 'STDIO and HTTP/OAuth — tools auto-documented for LLM', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/src/agent_framework/mcp' },
-  { name: 'REST & SSE API', tag: 'FastAPI endpoints with token-by-token streaming', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/src/service' },
-  { name: 'Observability', tag: 'Opik tracing, tool call timeline, and structured logging', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/src/agent_framework/observability' },
-  { name: 'Session Memory', tag: 'PostgreSQL-backed persistent conversations', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/src/agent_framework/session' },
-  { name: 'AgentShip Studio', tag: 'Browser chat UI with observability panel and stop button', href: 'https://github.com/Agent-Ship/agent-ship/tree/main/studio' },
-  { name: 'Documentation', tag: 'Quickstart, guides, API reference, and architecture', href: 'https://docs.agent-ship.dev/' },
+  { name: 'agentship-sdk', tag: 'The batteries-included meta-package — what you install', href: 'https://pypi.org/project/agentship-sdk/' },
+  { name: 'agentship-core', tag: 'The vendor-free kernel: spec, runtime, registry, middleware, echo engine', href: 'https://pypi.org/project/agentship-core/' },
+  { name: 'agentship-langgraph', tag: 'The reference engine — compiles a spec into a LangGraph StateGraph', href: 'https://pypi.org/project/agentship-langgraph/' },
+  { name: 'agentship-service', tag: 'The FastAPI app behind /v1 — REST, SSE, WebSocket, auth, Studio', href: 'https://pypi.org/project/agentship-service/' },
+  { name: 'agentship-observability', tag: 'The OpenTelemetry pipeline and its exporters', href: 'https://pypi.org/project/agentship-observability/' },
+  { name: 'agentship-cli', tag: 'init / new-agent / run / serve / doctor / verify / db upgrade', href: 'https://pypi.org/project/agentship-cli/' },
+  { name: 'agentship-voice', tag: 'The same agent over a live audio stream (Pipecat or LiveKit)', href: 'https://pypi.org/project/agentship-voice/' },
 ]
 
 export function Ecosystem() {
   return (
     <section className="section">
       <div className="container">
-        <h2 className="section-title">Ecosystem</h2>
+        <h2 className="section-title">Packages</h2>
         <p className="section-subtitle">
-          Everything included in AgentShip — the full production stack, ready to use out of the box.
+          Several distributions, released together on one version. Install only what you need.
+          `agentship-core` imports no vendor library — that is what keeps the seams honest.
         </p>
         <div className={styles.grid}>
           {PROJECTS.map((p) => (

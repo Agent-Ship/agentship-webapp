@@ -21,9 +21,11 @@
   top: 0; left: 0; right: 0;
   height: 3px;
 }
-.purple::before { background: linear-gradient(90deg, #7c3aed, #818cf8); }
-.teal::before   { background: linear-gradient(90deg, #059669, #34d399); }
-.mixed::before  { background: linear-gradient(90deg, #7c3aed, #34d399); }
+/* Flat accent rules, not gradients. All three cards carry the same accent —
+   the kit allows one accent colour, so a card is not distinguished by hue. */
+.purple::before,
+.teal::before,
+.mixed::before { background: var(--brand-indigo); opacity: 0.8; }
 
 .card:hover {
   border-color: var(--border-hover);
@@ -42,9 +44,9 @@
   border-radius: 12px;
   margin-bottom: 1.25rem;
 }
-.purple .cardIcon { color: #a78bfa; }
-.teal .cardIcon   { color: #34d399; }
-.mixed .cardIcon  { color: #818cf8; }
+.purple .cardIcon,
+.teal .cardIcon,
+.mixed .cardIcon { color: var(--brand-indigo); }
 
 .cardTitle {
   font-size: 1.25rem;

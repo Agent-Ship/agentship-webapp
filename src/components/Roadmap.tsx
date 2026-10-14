@@ -9,62 +9,67 @@ interface RoadmapPhase {
   phase: string
   period: string
   status: 'shipped' | 'building' | 'planned'
+  milestone: string
   summary: string
   items: RoadmapItem[]
 }
 
+/*
+ * Grouped by what is true of the tree, not by a date.
+ *
+ * The previous version had voice, observability, tools/MCP and service/security
+ * sitting under "planned" long after they shipped, and gave week estimates for
+ * work already released. Shipped items are the eleven capability pages in
+ * docs/capabilities/; the "not built yet" list is the project README's, verbatim.
+ */
 const PHASES: RoadmapPhase[] = [
   {
-    phase: 'v1',
-    period: 'Now — March 2026',
+    phase: '0.0.4',
+    period: 'On PyPI now',
     status: 'shipped',
-    summary: 'The runtime-agnostic production layer. Two engines, full MCP support, production-grade infrastructure.',
+    milestone: 'One capability page per item, each with a passing conformance cell',
+    summary:
+      'The spec and the vendor-free kernel, two engines, the /v1 service, the CLI, OpenTelemetry tracing, and voice. `agentship verify` proves each engine honours what it declares.',
     items: [
-      { label: 'Google ADK execution engine', done: true },
-      { label: 'LangGraph + LiteLLM execution engine', done: true },
-      { label: 'Engine swap via single YAML line', done: true },
-      { label: 'MCP STDIO transport (npx, Python subprocesses)', done: true },
-      { label: 'MCP HTTP/OAuth transport (GitHub, Slack, etc.)', done: true },
-      { label: 'Auto tool discovery and LLM documentation injection', done: true },
-      { label: 'Per-agent OAuth client isolation', done: true },
-      { label: 'PostgreSQL session storage — both engines', done: true },
-      { label: 'Token-by-token SSE streaming', done: true },
-      { label: 'Opik observability for ADK and LangGraph', done: true },
-      { label: 'AgentShip Studio — browser UI with observability panel', done: true },
-      { label: 'One-command Docker setup (make docker-setup)', done: true },
-      { label: 'Heroku one-command deploy', done: true },
-      { label: 'Comprehensive integration test suite', done: true },
+      { label: 'Foundation & base classes', done: true },
+      { label: 'Engine & agent authoring', done: true },
+      { label: 'Multi-agent supervisors', done: true },
+      { label: 'Checkpointing & human-in-the-loop', done: true },
+      { label: 'Durable resume', done: true },
+      { label: 'Tools & MCP', done: true },
+      { label: 'Observability & tracing', done: true },
+      { label: 'Service & security', done: true },
+      { label: 'Agent gateway / A2A', done: true },
+      { label: 'Voice', done: true },
+      { label: 'Verify & conformance', done: true },
     ],
   },
   {
-    phase: 'v2',
-    period: 'Q2–Q3 2026',
+    phase: 'Next',
+    period: 'No date yet',
     status: 'building',
-    summary: 'More engines, more memory backends, guardrails, and inter-agent protocols.',
+    milestone: 'Close the gaps the conformance grid already records',
+    summary:
+      'The open items are tracked as xfails and status notes rather than promises: child-span wiring for model, tool, MCP and graph-node spans, and per-member model routing in a supervisor.',
     items: [
-      { label: 'OpenAI Agents SDK execution engine' },
-      { label: 'CrewAI execution engine' },
-      { label: 'mem0 long-term memory backend' },
-      { label: 'Supermemory backend' },
-      { label: 'LangFuse observability backend' },
-      { label: 'Response caching layer' },
-      { label: 'Input and output guardrails' },
-      { label: 'A2A (Agent-to-Agent) protocol support' },
-      { label: 'AgentShip CLI for scaffolding and management' },
+      { label: 'Model / tool / MCP / graph-node child spans' },
+      { label: 'Per-member model routing' },
     ],
   },
   {
-    phase: 'v3',
-    period: 'Later',
+    phase: 'Later',
+    period: 'Not built — do not plan around these',
     status: 'planned',
-    summary: 'Evaluation, vector memory, community registry, and one-click cloud deploys.',
+    milestone: 'Named so the absence is on the record',
+    summary:
+      'These are not in the tree and are not promised for a release. The engine contract is designed to take a second and third adapter, which is what makes the ADK and Pydantic AI work tractable rather than done.',
     items: [
-      { label: 'Eval framework for agent quality measurement' },
-      { label: 'pgvector memory backend' },
-      { label: 'AgentShip Hub — community agent registry' },
-      { label: 'One-click Render / Railway deploy' },
-      { label: 'Autogen engine adapter' },
-      { label: 'Agent-to-UI (A2UI) protocol' },
+      { label: 'Long-term memory' },
+      { label: 'Guardrails & PII' },
+      { label: 'Sandboxing' },
+      { label: 'Evals' },
+      { label: 'Pydantic AI engine adapter' },
+      { label: 'Google ADK engine adapter' },
     ],
   },
 ]
@@ -85,9 +90,9 @@ export function Roadmap() {
             <span className="gradient-text">Roadmap</span>
           </h1>
           <p className={styles.subtitle}>
-            AgentShip is the production layer above execution engines and below protocol layers.
-            Every item here widens that layer — more engines, more protocols, more backends — without
-            changing the interface your agent code talks to.
+            Nothing is called done until it has a capability page, a changelog entry, and a passing
+            cell in the conformance grid. What is not built is named below rather than left to
+            look imminent.
           </p>
         </div>
       </div>
@@ -106,6 +111,7 @@ export function Roadmap() {
             </div>
 
             <p className={styles.phaseSummary}>{phase.summary}</p>
+            <p className={styles.milestone}><strong>Milestone:</strong> {phase.milestone}</p>
 
             <ul className={styles.items}>
               {phase.items.map((item, i) => (
@@ -129,15 +135,16 @@ export function Roadmap() {
 
       <div className={styles.cta}>
         <p className={styles.ctaText}>
-          Missing something? Open an issue or upvote existing requests on GitHub.
+          Early, on the 0.x line — the API can change between minor versions. The changelog is
+          the authoritative record of what landed.
         </p>
         <a
-          href="https://github.com/Agent-Ship/agent-ship/issues"
+          href="https://github.com/Agent-Ship/agent-ship"
           target="_blank"
           rel="noopener noreferrer"
           className={styles.ctaBtn}
         >
-          View GitHub Issues
+          View on GitHub
           <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
             <path d="M3.5 1h7.5v7.5M11 1L4.5 7.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>

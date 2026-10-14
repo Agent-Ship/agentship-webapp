@@ -1,61 +1,41 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback } from 'react'
 import styles from './QuickStart.module.css'
 
-type Setup = 'Docker' | 'Local'
+type Setup = 'uv' | 'docker' | 'pip'
 
-const SETUP_OPTIONS: Setup[] = ['Docker', 'Local']
-const PKG_MAP: Record<Setup, string[]> = {
-  Docker: ['make', 'docker compose'],
-  Local: ['make', 'pipenv'],
-}
+const SETUP_OPTIONS: Setup[] = ['uv', 'docker', 'pip']
 
-const COMMANDS: Record<Setup, Record<string, string>> = {
-  Docker: {
-    make: `git clone https://github.com/Agent-Ship/agent-ship.git
-cd agent-ship
-make docker-setup`,
-    'docker compose': `git clone https://github.com/Agent-Ship/agent-ship.git
-cd agent-ship
-cp env.example .env   # Add your API keys
-docker compose up --build`,
-  },
-  Local: {
-    make: `git clone https://github.com/Agent-Ship/agent-ship.git
-cd agent-ship
-make setup
-make dev`,
-    pipenv: `git clone https://github.com/Agent-Ship/agent-ship.git
-cd agent-ship
-pipenv install --dev
-cp env.example .env   # Add your API keys
-pipenv run uvicorn src.service.main:app --reload --port 7001`,
-  },
+const COMMANDS: Record<Setup, string> = {
+  uv: `# 1. Install AgentShip\nuv pip install "agentship[starter]"\n\n# 2. Initialize project\nagentship init my-project\ncd my-project\n\n# 3. Create an agent\nagentship new-agent --engine langgraph --template single triage\n\n# 4. Serve\nagentship serve\n\n# → API at http://localhost:7001\n# → Studio at http://localhost:8123 (langgraph dev)`,
+  docker: `# 1. Clone the backend repo\ngit clone https://github.com/Agent-Ship/agent-ship.git\ncd agent-ship\n\n# 2. Set up (creates .env, builds, starts containers)\nmake docker-setup\nmake docker-up\n\n# → API at http://localhost:7001\n# → Studio at http://localhost:8123`,
+  pip: `# 1. Clone the backend repo\ngit clone https://github.com/Agent-Ship/agent-ship.git\ncd agent-ship\n\n# 2. Install deps\ncp env.example .env   # Add your API keys\n\n# 3. Start\nmake docker-up\n\n# → API at http://localhost:7001\n# → Studio at http://localhost:8123`,
 }
 
 const TIPS: Record<Setup, string> = {
-  Docker: 'Hot-reload enabled – edit code in src/ and changes auto-reload.',
-  Local: 'Requires Python 3.13+ and pipenv. Run "pip install pipenv" if needed.',
+  uv: 'Requires Python 3.13+. `agentship[starter]` includes core + service + CLI + langgraph + memory + observability + MCP.',
+  docker: 'Hot-reload enabled – edit agents/ and changes auto-reload. Requires Docker Desktop.',
+  pip: 'Requires Python 3.13+. Uses docker-compose for PostgreSQL. Fastest path for first-time setup.',
 }
 
 function highlightBash(code: string) {
   return code.split('\n').map((line, i) => {
-    const commentIdx = line.indexOf('#')
-    let mainPart = line
-    let comment = ''
-    if (commentIdx !== -1) {
-      mainPart = line.slice(0, commentIdx)
-      comment = line.slice(commentIdx)
-    }
-
-    const tokens = mainPart.split(/(\s+)/)
-    const cmd = tokens.find(t => t.trim().length > 0) || ''
-
+    const trimmed = line.trimStart()
+    const indent = line.slice(0, line.length - trimmed.length)
+    const isComment = trimmed.startsWith('#')
+    
     return (
       <span key={i}>
-        <span className={styles.hlPrompt}>$ </span>
-        <span className={styles.hlCmd}>{cmd}</span>
-        <span className={styles.hlArg}>{mainPart.slice(cmd.length)}</span>
-        {comment && <span className={styles.hlComment}>{comment}</span>}
+        <span className={styles.hlIndent}>{indent}</span>
+        {isComment ? (
+          <span className={styles.hlComment}>{trimmed}</span>
+        ) : trimmed === '' ? (
+          ''
+        ) : (
+          <>
+            <span className={styles.hlPrompt}>$ </span>
+            <span className={styles.hlCmd}>{trimmed.slice(2)}</span>
+          </>
+        )}
         {'\n'}
       </span>
     )
@@ -63,14 +43,10 @@ function highlightBash(code: string) {
 }
 
 export function QuickStart() {
-  const [setup, setSetup] = useState<Setup>('Docker')
-  const [pkg, setPkg] = useState('make')
+  const [setup, setSetup] = useState<Setup>('uv')
   const [copied, setCopied] = useState(false)
 
-  const handleSetup = (s: Setup) => { setSetup(s); setPkg(PKG_MAP[s][0]) }
-  const command = COMMANDS[setup][pkg] || ''
-
-  const highlighted = useMemo(() => highlightBash(command), [command])
+  const command = COMMANDS[setup] || ''
 
   const copy = useCallback(() => {
     navigator.clipboard.writeText(command)
@@ -83,48 +59,34 @@ export function QuickStart() {
       <div className="container--narrow">
         <h2 className="section-title">Quick Start</h2>
         <p className="section-subtitle">
-          Select your preferences and run the install command.{' '}
-          <strong>Docker</strong> is the smoothest path.
+          `pip install` → `agentship init` → a working agent in an afternoon.{' '}
+          <strong>uv</strong> is the recommended path.
         </p>
 
         <div className={styles.hints}>
-          <span>Python 3.13+ recommended</span>
-          <span>Docker recommended</span>
-          <span><a href="https://docs.agent-ship.dev/en/latest/user-guides/getting-started/quickstart.html" target="_blank" rel="noopener noreferrer">Full guide</a></span>
+          <span>Python 3.13+ required</span>
+          <span>uv recommended</span>
+          <span><a href="https://docs.agent-ship.dev/capabilities/foundation.html" target="_blank" rel="noopener noreferrer">Full guide</a></span>
         </div>
 
-        <div className={styles.selectors}>
-          <div className={styles.row}>
-            <span className={styles.label}>Setup</span>
-            <div className={styles.pills}>
-              {SETUP_OPTIONS.map((s) => (
-                <button key={s} className={setup === s ? styles.pillActive : styles.pill} onClick={() => handleSetup(s)}>{s}</button>
-              ))}
-            </div>
-          </div>
-          <div className={styles.row}>
-            <span className={styles.label}>Tool</span>
-            <div className={styles.pills}>
-              {PKG_MAP[setup].map((p) => (
-                <button key={p} className={pkg === p ? styles.pillActive : styles.pill} onClick={() => setPkg(p)}>{p}</button>
-              ))}
-            </div>
-          </div>
+        <div className={styles.pills}>
+          {SETUP_OPTIONS.map((s) => (
+            <button key={s} className={setup === s ? styles.pillActive : styles.pill} onClick={() => setSetup(s)}>
+              {s === 'uv' ? 'uv' : s === 'docker' ? 'Docker' : 'pip'}
+            </button>
+          ))}
         </div>
 
-        <div className={styles.cmdLabel}>Run this Command:</div>
+        <div className={styles.cmdLabel}>Run this:</div>
 
         <div className={styles.codeWrap}>
           <div className={styles.codeHeader}>
-            <span className={styles.codeDot} style={{ background: '#ff5f57' }} />
-            <span className={styles.codeDot} style={{ background: '#febc2e' }} />
-            <span className={styles.codeDot} style={{ background: '#28c840' }} />
             <span className={styles.codeTitle}>Terminal</span>
           </div>
-          <pre className={styles.code}><code>{highlighted}<span className={styles.hlSuccess}>{'✓'} API running at http://localhost:7001</span></code></pre>
+          <pre className={styles.code}><code>{highlightBash(command)}<span className={styles.hlSuccess}>✓ API running at http://localhost:7001</span></code></pre>
           <button className={styles.copyBtn} onClick={copy} title="Copy to clipboard">
             {copied ? (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-6" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-6" stroke="#5CCFC0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             ) : (
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M3 11V3a1.5 1.5 0 011.5-1.5H11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
             )}

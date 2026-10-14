@@ -1,8 +1,10 @@
 import { Hero } from './Hero'
 import { ValueProps } from './ValueProps'
-import { QuickStart } from './QuickStart'
+import { RecipeCards } from './RecipeCards'
+import { Architecture } from './Architecture'
 import { HowItWorks } from './HowItWorks'
 import { Compatibility } from './Compatibility'
+import { QuickStart } from './QuickStart'
 import { Community } from './Community'
 
 export function Home() {
@@ -10,9 +12,11 @@ export function Home() {
     <>
       <Hero />
       <ValueProps />
-      <QuickStart />
+      <RecipeCards />
+      <Architecture />
       <HowItWorks />
       <Compatibility />
+      <QuickStart />
       <Community />
     </>
   )

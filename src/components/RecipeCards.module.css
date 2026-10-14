@@ -1,0 +1,107 @@
+/* ─── Grid ─── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+/* ─── Card ─── */
+.card {
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  transition: border-color 0.15s, box-shadow 0.2s, transform 0.15s;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* One accent. The teal/purple/blue classes remain as call sites but all resolve
+   to the same accent — a capability is not distinguished by hue. */
+.teal .cardIcon,
+.purple .cardIcon,
+.blue .cardIcon { color: var(--brand-indigo); }
+
+/* A planned recipe must not read like a shipped one. */
+.planned { border-style: dashed; }
+.planned .cardIcon { color: var(--text-muted); }
+.planned .cardTitle { color: var(--text-secondary); }
+.planned .consume,
+.planned .build { color: var(--text-muted); font-style: italic; }
+.shipped .phase { color: var(--brand-indigo); background: rgba(166, 133, 238, 0.12); }
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.cardIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+}
+
+.phase {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 0.75rem;
+}
+
+.recipeBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recipeItem {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.recipeLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  min-width: 52px;
+}
+
+.consume {
+  font-size: 0.78rem;
+  color: var(--as-code-key);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+.build {
+  font-size: 0.78rem;
+  color: var(--brand-indigo-light);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+}

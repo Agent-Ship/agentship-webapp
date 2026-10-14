@@ -7,12 +7,13 @@
 }
 @media (max-width: 768px) { .codeGrid { grid-template-columns: 1fr; } }
 
+/* Code blocks keep the dark Panel ground in both themes — the kit sets code on
+   Panel, and a light code block would need a second highlight palette. */
 .codeBlock {
-  border-radius: 12px;
+  border-radius: var(--as-radius-card);
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  background: #0f1629;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid #2A3944;
+  background: #141C22;
 }
 
 .codeHeader {
@@ -20,48 +21,47 @@
   align-items: center;
   gap: 6px;
   padding: 0.65rem 1rem;
-  background: #1a1f35;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
-}
-
-.codeDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  background: #1B262D;
+  border-bottom: 1px solid #243039;
 }
 
 .fileName {
-  margin-left: auto;
   font-size: 0.7rem;
-  font-weight: 600;
-  color: #94a3b8;
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-weight: 500;
+  color: #9FB0B9;
+  font-family: var(--as-font-mono);
   text-transform: none;
   letter-spacing: 0;
 }
 
 .codeBody {
   padding: 1rem 1.25rem;
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-family: var(--as-font-mono);
   font-size: 0.8rem;
   line-height: 1.7;
-  color: #f1f5f9;
+  color: var(--as-fog);
   overflow-x: auto;
   margin: 0;
 }
 
-/* Syntax highlighting - shared */
-.hlComment { color: #64748b; font-style: italic; }
-.hlPunct { color: #94a3b8; }
+.line { display: block; }
 
-/* YAML highlighting */
-.hlKey { color: #93c5fd; }
-.hlVal { color: #f1f5f9; }
-.hlStr { color: #34d399; }
+/* Syntax highlighting. Three roles only, matching the kit's code tokens:
+   keyword = accent, name = the code teal, string/value = Fog. Everything else
+   is Muted. Code blocks stay on the dark Panel ground in both themes, so these
+   are the dark values in both. */
+.hlComment { color: var(--as-muted); font-style: italic; }
+.hlPunct { color: var(--as-muted); }
 
-/* Python highlighting */
-.hlKw { color: #c084fc; font-weight: 600; }
-.hlFn { color: #93c5fd; }
+/* YAML */
+.hlKey { color: var(--as-code-key); }
+.hlVal { color: var(--as-fog); }
+.hlStr { color: var(--as-fog); }
+
+/* Python */
+.hlKw { color: var(--as-accent); font-weight: 500; }
+.hlFn { color: var(--as-fog); }
+.hlType { color: var(--as-code-key); }
 
 .note {
   text-align: center;
@@ -74,6 +74,6 @@
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   font-size: 0.82rem;
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-family: var(--as-font-mono);
   color: var(--brand-indigo-light);
 }

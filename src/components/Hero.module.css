@@ -6,42 +6,26 @@
   text-align: center;
 }
 
-/* ─── Grid background ─── */
+/* ─── Grid background ───
+   The kit's one permitted texture: a faint 32px grid, Fog at 4.5% opacity, used
+   only on banners and hero areas. The line gradients here draw the rules of the
+   grid itself; they are not a decorative colour gradient. */
 .gridBg {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 48px 48px;
-  opacity: 0.35;
+    linear-gradient(rgba(232, 238, 240, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 238, 240, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 10%, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 10%, transparent 75%);
 }
 
-/* ─── Glow effects ─── */
-.glowCenter {
-  position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, var(--glow-primary) 0%, transparent 65%);
-  pointer-events: none;
-  opacity: 0.45;
-}
-
-.glowAccent {
-  position: absolute;
-  top: 20%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, var(--glow-teal) 0%, transparent 70%);
-  pointer-events: none;
-  opacity: 0.25;
+[data-theme='light'] .gridBg {
+  background-image:
+    linear-gradient(rgba(13, 19, 23, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13, 19, 23, 0.05) 1px, transparent 1px);
 }
 
 /* ─── Inner container ─── */
@@ -65,24 +49,23 @@
   color: var(--text-secondary);
   margin-bottom: 1.75rem;
 }
+/* No halo — the kit allows no glows. */
 .chipDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--brand-teal);
-  box-shadow: 0 0 6px var(--brand-teal);
 }
 
-/* ─── Big logo ─── */
+/* ─── Big logo ───
+   Size only. The lockup itself — mark geometry, the 500/800 weight pairing and
+   its clearspace — comes from Logo.module.css. */
 .bigLogo {
-  font-size: clamp(3.5rem, 9vw, 5.5rem);
-  font-weight: 900;
-  letter-spacing: -0.045em;
+  display: flex;
+  justify-content: center;
   line-height: 1;
   margin-bottom: 1.25rem;
 }
-.logoAgent { color: var(--text-heading); }
-.logoShip { color: var(--brand-periwinkle); }
 
 /* ─── Headline ─── */
 .title {
@@ -104,15 +87,15 @@
   overflow: hidden;
 }
 
+/* Flat accent, not a clipped gradient. These lines are long sentences now, so
+   they are set smaller and in the text face rather than as a display headline. */
 .rotatingText {
   display: inline-block;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-family: var(--as-font-text);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--brand-indigo);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
@@ -153,15 +136,14 @@
   gap: 8px;
   padding: 0.7rem 1.75rem;
   background: var(--gradient-btn);
-  color: #fff !important;
+  color: var(--on-accent) !important;
   font-weight: 600;
   font-size: 0.925rem;
   border-radius: 10px;
-  transition: box-shadow 0.2s, transform 0.15s;
+  transition: background 0.2s;
 }
 .primaryBtn:hover {
-  box-shadow: 0 0 24px var(--glow-primary), 0 4px 14px rgba(0,0,0,0.2);
-  transform: translateY(-2px);
+  background: var(--gradient-btn-hover);
   text-decoration: none;
 }
 

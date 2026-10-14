@@ -2,17 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AgentShip — Build and deploy AI agents in minutes, not weeks. The production layer for AI agents built on Google ADK and LangGraph." />
-    <meta property="og:title" content="AgentShip — Production layer for AI agents" />
-    <meta property="og:description" content="Build and deploy AI agents in minutes, not weeks." />
-    <meta property="og:image" content="/github-banner.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <title>AgentShip — Production layer for AI agents</title>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
+    <meta name="theme-color" content="#0D1317" />
+
+    <title>AgentShip — production plumbing for AI agents, without the rewrite</title>
+    <meta
+      name="description"
+      content="AgentShip is the production plumbing for AI agents. Author an agent — or a team of agents — in YAML or Python, and get serving, memory and observability wired for you. LangGraph runs the graph, LiteLLM handles models, MCP supplies tools, OpenTelemetry carries traces."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://agent-ship.dev/" />
+    <meta property="og:title" content="AgentShip — production plumbing for AI agents, without the rewrite" />
+    <meta
+      property="og:description"
+      content="Author an agent — or a team of agents — in YAML or Python. Get serving, memory and observability wired for you."
+    />
+    <meta property="og:image" content="https://agent-ship.dev/github-social-preview.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://agent-ship.dev/github-social-preview.png" />
+
+    <!-- Bricolage Grotesque / Instrument Sans / JetBrains Mono, self-hosted (SIL OFL).
+         Self-hosted rather than from a CDN so the site renders its own type on a network
+         that cannot reach Google, and so no visitor is announced to a third party. -->
+    <link rel="preload" href="/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
   </head>
   <body>
     <div id="root"></div>

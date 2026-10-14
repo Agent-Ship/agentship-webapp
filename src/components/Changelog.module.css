@@ -64,7 +64,7 @@
 .searchInput:focus {
   outline: none;
   border-color: var(--border-hover);
-  box-shadow: 0 0 0 3px var(--glow-primary);
+  box-shadow: 0 0 0 3px rgba(166, 133, 238, 0.35);
 }
 
 /* ─── Timeline ─── */
@@ -125,20 +125,22 @@
 }
 
 .badge_release {
-  background: rgba(124, 58, 237, 0.12);
+  background: rgba(166, 133, 238, 0.12);
   color: var(--brand-indigo-light);
 }
+/* Three neutral chips and one accent. The kit does not define a status palette,
+   and three saturated hues would read as three accents. */
 .badge_feature {
-  background: rgba(52, 211, 153, 0.12);
-  color: var(--brand-teal);
+  background: rgba(166, 133, 238, 0.12);
+  color: var(--brand-indigo);
 }
 .badge_fix {
-  background: rgba(251, 146, 60, 0.12);
-  color: #fb923c;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
 }
 .badge_docs {
-  background: rgba(96, 165, 250, 0.12);
-  color: #60a5fa;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
 }
 
 .date {
@@ -156,14 +158,14 @@
   line-height: 1.35;
 }
 
+/* Was a gradient clipped to the text; now flat accent, and in the mono face
+   since it is a version number. */
 .version {
   display: inline-block;
+  font-family: var(--as-font-mono);
   font-size: 0.7rem;
-  font-weight: 700;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 500;
+  color: var(--brand-indigo);
   margin-right: 0.5rem;
   vertical-align: middle;
 }

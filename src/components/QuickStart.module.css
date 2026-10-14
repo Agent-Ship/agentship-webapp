@@ -3,30 +3,19 @@
   justify-content: center;
   gap: 1.25rem;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-size: 0.8rem;
   color: var(--text-muted);
 }
 .hints a { color: var(--brand-indigo-light); font-weight: 500; }
 
-/* Selectors */
-.selectors {
+/* Setup pills */
+.pills {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0.375rem;
   margin-bottom: 1.5rem;
 }
-.row { display: flex; align-items: center; gap: 1rem; }
-.label {
-  min-width: 52px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.pills { display: flex; gap: 0.375rem; }
-
 .pill, .pillActive {
   padding: 0.4rem 1rem;
   font-size: 0.825rem;
@@ -43,10 +32,9 @@
   background: var(--bg-glass);
 }
 .pillActive {
-  background: rgba(124, 58, 237, 0.15);
+  background: rgba(166, 133, 238, 0.14);
   border-color: var(--brand-indigo);
   color: var(--brand-indigo-light);
-  box-shadow: 0 0 12px rgba(124, 58, 237, 0.15);
 }
 
 /* Command */
@@ -59,16 +47,15 @@
   margin-bottom: 0.5rem;
 }
 
+/* Terminal stays on the dark Panel ground in both themes, like the code blocks
+   in HowItWorks. The violet outer glow is gone — the kit allows no glows. */
 .codeWrap {
   position: relative;
   margin-bottom: 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--as-radius-card);
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  background: #0f1629;
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.25),
-    0 0 60px rgba(124, 58, 237, 0.08);
+  border: 1px solid #2A3944;
+  background: #141C22;
 }
 
 .codeHeader {
@@ -76,19 +63,13 @@
   align-items: center;
   gap: 6px;
   padding: 0.65rem 1rem;
-  background: #1a1f35;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
-}
-.codeDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  background: #1B262D;
+  border-bottom: 1px solid #243039;
 }
 .codeTitle {
-  margin-left: auto;
   font-size: 0.7rem;
   font-weight: 500;
-  color: #64748b;
+  color: #9FB0B9;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -97,36 +78,36 @@
   padding: 1rem 1.25rem;
   padding-right: 3rem;
   overflow-x: auto;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   line-height: 1.7;
-  color: #f1f5f9;
+  color: #E8EEF0;
   background: transparent;
   border: none;
   border-radius: 0;
   margin: 0;
 }
 .code code {
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', Menlo, monospace;
+  font-family: var(--as-font-mono);
   white-space: pre;
 }
 
-/* Syntax highlighting - bash */
-.hlPrompt { color: #64748b; }
-.hlCmd { color: #c084fc; font-weight: 600; }
-.hlArg { color: #cbd5e1; }
-.hlComment { color: #64748b; font-style: italic; }
-.hlSuccess { color: #34d399; font-weight: 500; }
+/* Syntax highlighting — same three roles as the HowItWorks blocks. */
+.hlIndent { display: inline; }
+.hlPrompt { color: #9FB0B9; }
+.hlCmd { color: #A685EE; font-weight: 500; }
+.hlComment { color: #9FB0B9; font-style: italic; }
+.hlSuccess { color: #5CCFC0; font-weight: 500; }
 
 .copyBtn {
   position: absolute;
   top: 44px;
   right: 12px;
   padding: 8px;
-  color: #64748b;
-  border-radius: 8px;
+  color: #9FB0B9;
+  border-radius: var(--as-radius-chip);
   transition: color 0.15s, background 0.15s;
 }
-.copyBtn:hover { color: #f1f5f9; background: rgba(148, 163, 184, 0.1); }
+.copyBtn:hover { color: #E8EEF0; background: rgba(232, 238, 240, 0.08); }
 
 .tip {
   font-size: 0.82rem;
@@ -135,6 +116,5 @@
 }
 
 @media (max-width: 640px) {
-  .row { flex-wrap: wrap; }
   .hints { gap: 0.75rem; }
 }

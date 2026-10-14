@@ -22,12 +22,12 @@
   height: 56px;
   border-radius: 50%;
   background: var(--gradient-btn);
-  color: #fff;
+  color: var(--on-accent);
   box-shadow: var(--shadow-card);
   transition: box-shadow 0.2s, transform 0.1s;
 }
 .toggle:hover {
-  box-shadow: 0 0 20px var(--glow-primary);
+  background: var(--gradient-btn-hover);
   transform: translateY(-1px);
 }
 .toggle:focus-visible {
@@ -214,7 +214,7 @@
 }
 .msgUser .msgBubble {
   background: var(--gradient-btn);
-  color: #fff;
+  color: var(--on-accent);
   border-bottom-right-radius: 4px;
 }
 .msgAssistant .msgBubble {
@@ -256,7 +256,7 @@
 .input:focus {
   outline: none;
   border-color: var(--border-hover);
-  box-shadow: 0 0 0 3px var(--glow-primary);
+  box-shadow: 0 0 0 3px rgba(166, 133, 238, 0.35);
 }
 .sendBtn {
   display: flex;
@@ -267,11 +267,11 @@
   flex-shrink: 0;
   border-radius: 8px;
   background: var(--gradient-btn);
-  color: #fff;
+  color: var(--on-accent);
   transition: box-shadow 0.2s, transform 0.1s;
 }
 .sendBtn:hover:not(:disabled) {
-  box-shadow: 0 0 20px var(--glow-primary);
+  background: var(--gradient-btn-hover);
   transform: translateY(-1px);
 }
 .sendBtn:disabled {

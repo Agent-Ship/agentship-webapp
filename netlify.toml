@@ -9,3 +9,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# The self-hosted brand fonts are content-addressed by name and never change in
+# place, so they can be cached hard. Without this they are re-fetched on every
+# visit and the first paint falls back to a system face.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
